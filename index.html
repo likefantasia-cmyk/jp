@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)file:///Users/kumori67/Downloads/nihongo_4.html -->
+<!-- saved from url=(0047)file:///Users/kumori67/Downloads/nihongo_5.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -485,18 +485,17 @@ function saveKey(k){lsSet("nf-key",k);}
 
 async function callAI(messages){
   var key=getKey();if(!key)throw new Error("請先設定 API Key");
-  var res=await fetch("https://api.anthropic.com/v1/messages",{
+  var res=await fetch("https://api.openai.com/v1/chat/completions",{
     method:"POST",
-    headers:{"Content-Type":"application/json"},
+    headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},
     body:JSON.stringify({
-      model:"claude-sonnet-4-20250514",max_tokens:1500,
-      system:"你是日語教學專家。只輸出 JSON，不加任何 markdown 或說明文字。",
-      messages:messages
+      model:"gpt-4o",max_tokens:1500,
+      messages:[{role:"system",content:"你是日語教學專家。只輸出 JSON，不加任何 markdown 或說明文字。"}].concat(messages)
     })
   });
   var data=await res.json();
   if(!res.ok)throw new Error(data.error?.message||"API 錯誤");
-  return data.content.filter(function(c){return c.type==="text";}).map(function(c){return c.text;}).join("");
+  return data.choices[0].message.content;
 }
 
 function parseJSON(raw){
@@ -563,7 +562,7 @@ function renderAdd(){
     w.appendChild(mk("div","slbl","設定 Anthropic API Key"));
     var box=mk("div","apib");
     box.appendChild(mk("div","apil","請輸入你的 Anthropic API Key 才能使用 AI 功能。"));
-    var inp=mk("input","apii");inp.id="ki";inp.placeholder="sk-ant-...";inp.type="password";
+    var inp=mk("input","apii");inp.id="ki";inp.placeholder="sk-...";inp.type="password";
     var btn=mk("button","bp","儲存並開始");btn.onclick=function(){
       var k=inp.value.trim();if(!k){toast("請輸入 Key");return;}
       saveKey(k);toast("✅ Key 已儲存！");renderAdd();
