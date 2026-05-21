@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)file:///Users/kumori67/Downloads/nihongo_5.html -->
+<!-- saved from url=(0047)file:///Users/kumori67/Downloads/nihongo_7.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -525,6 +525,22 @@ function showView(v){
   else if(v==="article")renderArticle();
 }
 
+
+// 查詢相關單字並直接加入單字庫
+async function lookupAndAdd(word){
+  if(!getKey()){toast("請先設定 API Key");return;}
+  toast("⏳ 查詢「"+word+"」中...");
+  try{
+    var raw=await callAI([{role:"user",content:wprompt(word)}]);
+    var d=parseJSON(raw);
+    var w=Array.isArray(d)?d[0]:d;
+    if(!w||!w.word){toast("❌ 查詢失敗");return;}
+    if(LIB.some(function(l){return l.word===w.word;})){toast("「"+word+"」已在單字庫");return;}
+    pushLib(Object.assign({},w,{source:"相關單字"}));
+    toast("✅ 已加入："+word);
+  }catch(e){toast("❌ "+e.message);}
+}
+
 // ══════════════════════════════
 // 首頁
 // ══════════════════════════════
@@ -992,7 +1008,10 @@ function fillModal(mb,w,libIdx){
     var fr=mk("div","");fr.style.cssText="display:flex;flex-wrap:wrap;gap:5px;margin-top:4px";
     w.related.forEach(function(r){
       var c=mk("span","");c.style.cssText="background:var(--s2);border:1px solid var(--bd2);border-radius:7px;padding:3px 9px;font-size:13px;cursor:pointer";c.textContent=r;
-      c.onclick=function(){closeModal();setTimeout(function(){LIB.some(function(x){return x.word===r;})?openModal(r):showView("add");},200);};
+      c.onclick=(function(word){return function(){
+        if(LIB.some(function(x){return x.word===word;})){closeModal();setTimeout(function(){openModal(word);},200);}
+        else{lookupAndAdd(word);}
+      };})(r);
       fr.appendChild(c);
     });
     rb.appendChild(fr);mb.appendChild(rb);
