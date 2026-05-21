@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)file:///Users/kumori67/Downloads/nihongo_7.html -->
+<!-- saved from url=(0047)file:///Users/kumori67/Downloads/nihongo_8.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -323,7 +323,7 @@ const WCOL=collection(db,"users","kumo_nihongo","jp_words");
 const GCOL=collection(db,"users","kumo_nihongo","jp_grammar");
 const SCOL=collection(db,"users","kumo_nihongo","jp_srs");
 
-function wkey(w){return w.replace(/[^\u3040-\u30ff\u4e00-\u9fff\uff00-\uffef]/g,"").slice(0,20)||("w"+Date.now());}
+function wkey(w){var k=w.replace(/[^\u3040-\u30ff\u4e00-\u9fff\uff00-\uffefA-Za-z0-9]/g,"_").slice(0,40);return k||("w_"+Date.now());}
 function gkey(t){return t.replace(/[^\u3040-\u30ff\u4e00-\u9fff\uff00-\uffefA-Za-z〜]/g,"").slice(0,20)||("g"+Date.now());}
 
 // ── 快速啟動（localStorage）
@@ -366,11 +366,14 @@ async function fbLoad(){
 async function fbSaveWord(w){
   try{
     const ts=Date.now();
-    await setDoc(doc(WCOL,wkey(w.word)),w);
+    const k=wkey(w.word);
+    console.log("fbSaveWord key="+k, w.word);
+    await setDoc(doc(WCOL,k),w);
     await setDoc(UREF,{lastSaved:ts,stats:window.ST||{}},{merge:true});
     lsSet("nf-lastSaved",ts);lsSet("nf-lib",window.LIB);
     syncDot(true);
-  }catch(e){console.warn("fbSaveWord",e);syncDot(false);}
+    console.log("fbSaveWord OK: "+w.word);
+  }catch(e){console.error("fbSaveWord ERROR",e);syncDot(false);}
 }
 
 async function fbDeleteWord(word){
