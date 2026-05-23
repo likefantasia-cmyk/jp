@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_10.html -->
+<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_12.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -303,8 +303,8 @@ nav button.on{color:var(--pk)}
 </div>
 
 <!-- 模態視窗 -->
-<div class="mbg" id="modal" style="display:none" onclick="if(event.target===this)closeModal()">
-  <div class="modal"><div id="mbody" style="display:flex;flex-direction:column;overflow:hidden;max-height:91dvh"></div></div>
+<div class="mbg" id="modal" style="display: flex;" onclick="if(event.target===this)closeModal()">
+  <div class="modal"><div id="mbody" style="display:flex;flex-direction:column;overflow:hidden;max-height:91dvh"><div class="mnav"><button style="background: var(--s2); border: 1px solid var(--bd2); color: var(--m2); border-radius: 9px; padding: 7px 13px; font-size: 17px;">←</button><div style="font-size: 12px; color: var(--mu); flex: 1 1 0%; text-align: center; font-weight: 600;">15 / 15</div><button style="background: var(--pk2); color: rgb(26, 10, 14); border-radius: 9px; padding: 7px 13px; font-size: 17px;">→</button></div><div class="mbody-scroll"><div class="mword">ぴったり</div><div style="display: flex; align-items: center; gap: 8px;"><div class="wkana">平假名</div><span class="wtag tpu">重音 1</span></div><div class="wtags" style="margin-top: 7px;"><span class="wtag tpk">N3</span><span class="wtag tbl">副詞</span></div><div class="wzh">正好、緊密</div><div class="wja">隙間なく密着するさま。ちょうど合うさま。</div><div class="exb"><div style="display: flex; align-items: center; gap: 6px;"><div class="exjp">彼の話は現実にぴったり合っている。</div><button style="font-size: 14px; color: var(--bl); flex-shrink: 0;">🔊</button></div><div class="exzh">他的話正好符合現實。</div></div><div style="display: flex; flex-direction: column; gap: 7px;"><div class="inp-lbl">我的例句</div><div id="modal-exlist"></div><div class="srow"><input class="inp" placeholder="新增自己的例句" style="flex: 1 1 0%;"><button class="bbtn">新增</button></div></div><div class="sprow"><button class="bspk">🔊 單字</button><button class="bspk">🔊 例句</button></div><div class="tbox"><div class="tlbl">💡 記憶技巧</div><div class="ttxt">記得「ぴったり」可以想像緊密合上的拉鍊。</div></div><div class="tbox"><div class="tlbl">📚 相關單字</div><div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px;"><span style="background: var(--s2); border: 1px solid var(--bd2); border-radius: 7px; padding: 3px 9px; font-size: 13px; cursor: pointer;">密着</span><span style="background: var(--s2); border: 1px solid var(--bd2); border-radius: 7px; padding: 3px 9px; font-size: 13px; cursor: pointer;">合う</span><span style="background: var(--s2); border: 1px solid var(--bd2); border-radius: 7px; padding: 3px 9px; font-size: 13px; cursor: pointer;">きっちり</span></div></div><button class="mclose">關閉</button></div></div></div>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -752,10 +752,10 @@ function doWord(){
 }
 
 function wprompt(word){
-  return "分析日文單字「"+word+"」，返回 JSON：{\"word\":\""+word+"\",\"kana\":\"平假名\",\"accent\":\"重音數字（0平板/1頭高/2以上尾高，如2）\",\"pos\":\"詞性\",\"jlpt\":\"N5/N4/N3/N2/N1\",\"zh\":\"繁中意思2-6字\",\"ja_def\":\"日語說明\",\"example_jp\":\"JLPT例句\",\"example_zh\":\"繁中翻譯\",\"memory_tip\":\"繁中記憶技巧\",\"related\":[\"相關詞1\",\"相關詞2\",\"相關詞3\"]}";
+  return "詳細分析日文單字「"+word+"」，若有多個義項請全部列出，例句數量請與原意完整對應。返回 JSON（只輸出JSON）：{\"word\":\""+word+"\",\"kana\":\"平假名\",\"accent\":\"重音數字(0平板/1頭高/數字尾高)\",\"pos\":\"詞性\",\"jlpt\":\"N5-N1\",\"memory_tip\":\"繁中記憶技巧\",\"related\":[\"相關詞1\",\"相關詞2\"],\"senses\":[{\"zh\":\"繁中意思\",\"ja_def\":\"日語解釋\",\"examples\":[{\"jp\":\"例句日文\",\"zh\":\"繁中翻譯\"}]}]}";
 }
 function bprompt(words){
-  return "批次分析日文單字["+words.join("、")+"]，返回 JSON 陣列：[{\"word\":\"\",\"kana\":\"\",\"accent\":\"重音數字\",\"pos\":\"\",\"jlpt\":\"\",\"zh\":\"繁中\",\"ja_def\":\"\",\"example_jp\":\"\",\"example_zh\":\"\",\"memory_tip\":\"\",\"related\":[]}]";
+  return "批次分析日文單字["+words.join("、")+"]，每個單字若有多義請全部列出。返回 JSON 陣列（只輸出JSON）：[{\"word\":\"\",\"kana\":\"\",\"accent\":\"重音數字\",\"pos\":\"\",\"jlpt\":\"\",\"memory_tip\":\"\",\"related\":[],\"senses\":[{\"zh\":\"繁中意思\",\"ja_def\":\"日語解釋\",\"examples\":[{\"jp\":\"例句\",\"zh\":\"翻譯\"}]}]}]";
 }
 
 function setLoad(msg){
@@ -790,12 +790,29 @@ function buildWCard(w,idx){
   card.appendChild(tags);
   card.appendChild(mk("div","wjp",w.word));
   var kanaRow=mk("div","");kanaRow.style.cssText="display:flex;align-items:center;gap:8px";
-  if(w.kana){var kEl=mk("div","wkana",w.kana);kanaRow.appendChild(kEl);}
-  if(w.accent!==undefined&&w.accent!==""){var ac=mk("span","wtag tpu","重音 "+w.accent);kanaRow.appendChild(ac);}
+  if(w.kana){kanaRow.appendChild(mk("div","wkana",w.kana));}
+  if(w.accent!==undefined&&w.accent!==""){kanaRow.appendChild(mk("span","wtag tpu","重音 "+w.accent));}
   if(kanaRow.children.length)card.appendChild(kanaRow);
-  card.appendChild(mk("div","wzh",w.zh));
-  if(w.ja_def)card.appendChild(mk("div","wja",w.ja_def));
-  if(w.example_jp){var eb=mk("div","exb");eb.appendChild(mk("div","exjp",w.example_jp));eb.appendChild(mk("div","exzh",w.example_zh||""));card.appendChild(eb);}
+  // 多義詞顯示
+  var senses=w.senses&&w.senses.length?w.senses:(w.zh?[{zh:w.zh,ja_def:w.ja_def||"",examples:w.example_jp?[{jp:w.example_jp,zh:w.example_zh||""}]:[]}]:[]);
+  senses.forEach(function(s,si){
+    var snum=senses.length>1?mk("span","wtag tbl","義"+String.fromCharCode(9312+si)):null;
+    var zhEl=mk("div","wzh",s.zh||"");
+    if(snum){var row=mk("div","");row.style.cssText="display:flex;align-items:center;gap:7px";row.appendChild(snum);row.appendChild(zhEl);card.appendChild(row);}
+    else card.appendChild(zhEl);
+    if(s.ja_def)card.appendChild(mk("div","wja",s.ja_def));
+    (s.examples||[]).forEach(function(ex){
+      var eb=mk("div","exb");
+      var jpRow=mk("div","");jpRow.style.cssText="display:flex;align-items:center;gap:6px";
+      jpRow.appendChild(mk("div","exjp",ex.jp||""));
+      var spkBtn=mk("button","");spkBtn.style.cssText="font-size:13px;color:var(--bl);flex-shrink:0";spkBtn.textContent="🔊";
+      spkBtn.onclick=(function(t){return function(e){e.stopPropagation();speak(t);};})(ex.jp||"");
+      jpRow.appendChild(spkBtn);
+      eb.appendChild(jpRow);
+      if(ex.zh)eb.appendChild(mk("div","exzh",ex.zh));
+      card.appendChild(eb);
+    });
+  });
   var sp=mk("div","sprow");
   var b1=mk("button","bspk","🔊 單字");b1.onclick=function(){speak(w.word);};sp.appendChild(b1);
   if(w.example_jp){var b2=mk("button","bspk","🔊 例句");b2.onclick=function(){speak(w.example_jp);};sp.appendChild(b2);}
@@ -829,7 +846,12 @@ function saveAllPend(){
 
 function pushLib(w){
   chkDay();
-  var obj={word:w.word||"",kana:w.kana||"",accent:w.accent!==undefined?String(w.accent):"",pos:w.pos||"",jlpt:w.jlpt||"",zh:w.zh||"",ja_def:w.ja_def||"",example_jp:w.example_jp||"",example_zh:w.example_zh||"",memory_tip:w.memory_tip||"",related:w.related||[],my_examples:w.my_examples||[],source:w.source||"手動",addedAt:Date.now()};
+  var _senses=w.senses&&w.senses.length?w.senses:[];
+  // 相容舊格式：若沒有 senses 但有 zh/example_jp，自動轉換
+  if(!_senses.length&&(w.zh||w.example_jp)){
+    _senses=[{zh:w.zh||"",ja_def:w.ja_def||"",examples:w.example_jp?[{jp:w.example_jp,zh:w.example_zh||""}]:[]}];
+  }
+  var obj={word:w.word||"",kana:w.kana||"",accent:w.accent!==undefined?String(w.accent):"",pos:w.pos||"",jlpt:w.jlpt||"",zh:(w.zh||(_senses[0]&&_senses[0].zh)||""),ja_def:(w.ja_def||(_senses[0]&&_senses[0].ja_def)||""),example_jp:(w.example_jp||(_senses[0]&&_senses[0].examples&&_senses[0].examples[0]&&_senses[0].examples[0].jp)||""),example_zh:(w.example_zh||(_senses[0]&&_senses[0].examples&&_senses[0].examples[0]&&_senses[0].examples[0].zh)||""),senses:_senses,memory_tip:w.memory_tip||"",related:w.related||[],my_examples:w.my_examples||[],source:w.source||"手動",addedAt:Date.now()};
   LIB.push(obj);ST.today++;syncLib();syncST();
   if(window.fbSaveWord)window.fbSaveWord(obj);
   if(window.fbSaveSt)window.fbSaveSt();
@@ -1042,9 +1064,26 @@ function fillModal(mb,w,libIdx){
   if(w.jlpt)tags.appendChild(mk("span","wtag tpk",w.jlpt));
   if(w.pos)tags.appendChild(mk("span","wtag tbl",w.pos));
   mb.appendChild(tags);
-  mb.appendChild(mk("div","wzh",w.zh));
-  if(w.ja_def)mb.appendChild(mk("div","wja",w.ja_def));
-  if(w.example_jp){var eb=mk("div","exb");eb.appendChild(mk("div","exjp",w.example_jp));eb.appendChild(mk("div","exzh",w.example_zh||""));mb.appendChild(eb);}
+  // 多義詞
+  var msenses=w.senses&&w.senses.length?w.senses:(w.zh?[{zh:w.zh,ja_def:w.ja_def||"",examples:w.example_jp?[{jp:w.example_jp,zh:w.example_zh||""}]:[]}]:[]);
+  msenses.forEach(function(s,si){
+    var snum=msenses.length>1?mk("span","wtag tbl","義"+String.fromCharCode(9312+si)):null;
+    var zhEl=mk("div","wzh",s.zh||"");
+    if(snum){var row=mk("div","");row.style.cssText="display:flex;align-items:center;gap:7px;margin-top:6px";row.appendChild(snum);row.appendChild(zhEl);mb.appendChild(row);}
+    else mb.appendChild(zhEl);
+    if(s.ja_def)mb.appendChild(mk("div","wja",s.ja_def));
+    (s.examples||[]).forEach(function(ex){
+      var eb=mk("div","exb");
+      var jpRow=mk("div","");jpRow.style.cssText="display:flex;align-items:center;gap:6px";
+      jpRow.appendChild(mk("div","exjp",ex.jp||""));
+      var spkBtn=mk("button","");spkBtn.style.cssText="font-size:14px;color:var(--bl);flex-shrink:0";spkBtn.textContent="🔊";
+      spkBtn.onclick=(function(t){return function(e){e.stopPropagation();speak(t);};})(ex.jp||"");
+      jpRow.appendChild(spkBtn);
+      eb.appendChild(jpRow);
+      if(ex.zh)eb.appendChild(mk("div","exzh",ex.zh));
+      mb.appendChild(eb);
+    });
+  });
 
   // 我的例句
   var exSec=mk("div","");exSec.style.cssText="display:flex;flex-direction:column;gap:7px";
@@ -1468,32 +1507,41 @@ function toast(msg,dur){
   var t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");
   if(_tt)clearTimeout(_tt);_tt=setTimeout(function(){t.classList.remove("show");},dur||2500);
 }
-var _audioCtx=null;
+var _ttsCache={};
+var _curAudio=null;
+var EL_KEY="sk_62544d07604a03d35e12f45fed3a5805a9bc2f94711c5aed";
+var EL_VOICE="3321Alera3fXjEWjjbAX";
+
 async function speak(text){
-  var key=getKey();
-  if(!key){
+  if(!text)return;
+  try{if(_curAudio){_curAudio.pause();_curAudio=null;}}catch(e){}
+  try{
+    // 快取：同一段文字不重複打 API
+    var blob=_ttsCache[text];
+    if(!blob){
+      var res=await fetch("https://api.elevenlabs.io/v1/text-to-speech/"+EL_VOICE+"/stream",{
+        method:"POST",
+        headers:{"Content-Type":"application/json","xi-api-key":EL_KEY},
+        body:JSON.stringify({
+          text:text,
+          model_id:"eleven_multilingual_v2",
+          voice_settings:{stability:0.4,similarity_boost:0.85,style:0.3,use_speaker_boost:true}
+        })
+      });
+      if(!res.ok)throw new Error("EL TTS失敗 "+res.status);
+      blob=await res.blob();
+      _ttsCache[text]=blob;
+    }
+    var url=URL.createObjectURL(blob);
+    var audio=new Audio(url);
+    _curAudio=audio;
+    audio.play();
+  }catch(e){
+    console.warn("EL TTS error",e);
     // fallback 內建TTS
     if(!window.speechSynthesis)return;
     var u=new SpeechSynthesisUtterance(text);u.lang="ja-JP";u.rate=0.9;
-    speechSynthesis.cancel();speechSynthesis.speak(u);return;
-  }
-  try{
-    var res=await fetch("https://api.openai.com/v1/audio/speech",{
-      method:"POST",
-      headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},
-      body:JSON.stringify({model:"tts-1",input:text,voice:"shimmer",speed:0.95})
-    });
-    if(!res.ok)throw new Error("TTS失敗");
-    var buf=await res.arrayBuffer();
-    if(!_audioCtx)_audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    var decoded=await _audioCtx.decodeAudioData(buf);
-    var src=_audioCtx.createBufferSource();
-    src.buffer=decoded;src.connect(_audioCtx.destination);src.start(0);
-  }catch(e){
-    console.warn("TTS error",e);
-    if(!window.speechSynthesis)return;
-    var u2=new SpeechSynthesisUtterance(text);u2.lang="ja-JP";u2.rate=0.9;
-    speechSynthesis.cancel();speechSynthesis.speak(u2);
+    speechSynthesis.cancel();speechSynthesis.speak(u);
   }
 }
 
