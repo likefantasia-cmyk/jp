@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_24.html -->
+<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_25.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -257,14 +257,19 @@ nav button.on{color:var(--pk)}
       <div class="sync-row"><span class="sdot" id="sdot" style="background: var(--gn);"></span><span class="stxt" id="stxt">已同步</span></div>
     </div>
     <div class="hdiv"></div>
+    <div style="display:flex;gap:8px;padding:0 22px 12px">
+      <button onclick="exportJSON()" style="flex:1;background:var(--s2);border:1px solid var(--bd2);color:var(--m2);border-radius:10px;padding:9px;font-size:12px;font-weight:700">📤 匯出 JSON</button>
+      <button onclick="document.getElementById(&#39;import-file&#39;).click()" style="flex:1;background:var(--s2);border:1px solid var(--bd2);color:var(--m2);border-radius:10px;padding:9px;font-size:12px;font-weight:700">📥 匯入 JSON</button>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(this)">
+    </div>
     <div class="stats">
-      <div class="stat"><div class="stn" id="ht">21</div><div class="stl">單字</div></div>
+      <div class="stat"><div class="stn" id="ht">22</div><div class="stl">單字</div></div>
       <div class="stat"><div class="stn" id="hg">4</div><div class="stl">文法</div></div>
-      <div class="stat"><div class="stn" id="hd">8</div><div class="stl">今日新增</div></div>
+      <div class="stat"><div class="stn" id="hd">9</div><div class="stl">今日新增</div></div>
       <div class="stat"><div class="stn" id="hq">0</div><div class="stl">測驗</div></div>
     </div>
     <div class="sh">最近新增</div>
-    <div class="rlist" id="rlist"><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">じっと見る。</div><div class="riz">ひらがな　專注地看</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見つめる</div><div class="riz">みつめる　凝視</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">目にとめる</div><div class="riz">めにとめる　注意到</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見かける</div><div class="riz">みかける　偶然看到</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見つける</div><div class="riz">みつける　找到</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見る</div><div class="riz">みる　觀看</div></div><span class="wtag lv0">未學</span></div></div>
+    <div class="rlist" id="rlist"><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">目にとめる。</div><div class="riz">めにとめる。　注意、留意</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">じっと見る。</div><div class="riz">ひらがな　專注地看</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見つめる</div><div class="riz">みつめる　凝視</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">目にとめる</div><div class="riz">めにとめる　注意到</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見かける</div><div class="riz">みかける　偶然看到</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見つける</div><div class="riz">みつける　找到</div></div><span class="wtag lv0">未學</span></div></div>
   </div>
 
   <!-- 新增 -->
@@ -303,8 +308,8 @@ nav button.on{color:var(--pk)}
 </div>
 
 <!-- 模態視窗 -->
-<div class="mbg" id="modal" style="display: flex;" onclick="if(event.target===this)closeModal()">
-  <div class="modal"><div id="mbody" style="display:flex;flex-direction:column;max-height:91dvh"><div class="mnav"><button onclick="modalNav(-1)" style="background: var(--s2); border: 1px solid var(--bd2); color: var(--m2); border-radius: 9px; padding: 8px 18px; font-size: 20px; font-weight: 700; cursor: pointer;">←</button><div style="font-size: 12px; color: var(--mu); flex: 1 1 0%; text-align: center; font-weight: 600;">1 / 21</div><button onclick="modalNav(1)" style="background: var(--pk2); color: rgb(26, 10, 14); border-radius: 9px; padding: 8px 18px; font-size: 20px; font-weight: 700; cursor: pointer;">→</button></div><div class="mbody-scroll"><div class="mword">じっと見る。</div><div style="display: flex; align-items: center; gap: 8px;"><div class="wkana">ひらがな</div><span class="wtag tpu">重音 0</span></div><div class="wtags" style="margin-top: 7px;"><span class="wtag tpk">N5</span><span class="wtag tbl">動詞</span></div><div class="tbox"><div class="tlbl">📖 解説・記憶方法</div><div class="ttxt">記得「じっと」的意思是專注或不動。</div></div><div class="wzh">專注地看</div><div class="wja">動かないで、一点をじーっと見つめること。</div><div class="exb"><div style="display: flex; align-items: center; gap: 6px;"><div class="exjp">彼は答えを待ちながらじっと見ていた。</div><button style="font-size: 14px; color: var(--bl); flex-shrink: 0;">🔊</button></div><div class="exzh">他在等待答案的時候專注地盯著。</div></div><div class="exb"><div style="display: flex; align-items: center; gap: 6px;"><div class="exjp">猫が窓の外をじっと見ている。</div><button style="font-size: 14px; color: var(--bl); flex-shrink: 0;">🔊</button></div><div class="exzh">貓在專注地看著窗外。</div></div><div style="display: flex; flex-direction: column; gap: 7px;"><div class="inp-lbl">我的例句</div><div id="modal-exlist"></div><div class="srow"><input class="inp" placeholder="新增自己的例句" style="flex: 1 1 0%;"><button class="bbtn">新增</button></div></div><div class="sprow"><button class="bspk">🔊 單字</button><button class="bspk">🔊 例句</button></div><div class="tbox"><div class="tlbl">💡 記憶技巧</div><div class="ttxt">記得「じっと」的意思是專注或不動。</div></div><div class="tbox"><div class="tlbl">📚 相關單字</div><div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px;"><span style="background: var(--s2); border: 1px solid var(--bd2); border-radius: 7px; padding: 3px 9px; font-size: 13px; cursor: pointer;">見る</span><span style="background: var(--s2); border: 1px solid var(--bd2); border-radius: 7px; padding: 3px 9px; font-size: 13px; cursor: pointer;">凝視する</span></div></div><button class="mclose">關閉</button></div></div></div>
+<div class="mbg" id="modal" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal"><div id="mbody" style="display:flex;flex-direction:column;max-height:91dvh"></div></div>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -598,6 +603,68 @@ async function lookupAndAdd(word){
     pushLib(Object.assign({},w,{source:"相關單字"}));
     toast("✅ 已加入："+word);
   }catch(e){toast("❌ "+e.message);}
+}
+
+
+// ══════════════════════════════
+// JSON 匯出 / 匯入
+// ══════════════════════════════
+function exportJSON(){
+  var data={
+    version:1,
+    exportedAt:new Date().toISOString(),
+    words:LIB,
+    grammar:GRAM,
+    srs:SRS_MAP,
+    stats:ST
+  };
+  var blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement("a");
+  a.href=url;
+  a.download="nihongo_backup_"+new Date().toISOString().slice(0,10)+".json";
+  a.click();
+  URL.revokeObjectURL(url);
+  toast("✅ 已匯出！");
+}
+
+function importJSON(input){
+  var file=input.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      var data=JSON.parse(e.target.result);
+      if(!data.words&&!data.grammar){toast("❌ 格式錯誤");return;}
+      var mode=confirm("匯入模式：\n✅ 確定 = 合併（保留現有資料）\n❌ 取消 = 覆蓋（清除現有資料）");
+      if(mode){
+        // 合併：不重複加入
+        var added=0;
+        (data.words||[]).forEach(function(w){
+          if(!LIB.some(function(l){return l.word===w.word;})){LIB.push(w);added++;}
+        });
+        (data.grammar||[]).forEach(function(g){
+          if(!GRAM.some(function(x){return x.title===g.title;})){GRAM.push(g);}
+        });
+        if(data.srs)Object.assign(SRS_MAP,data.srs);
+        toast("✅ 合併完成，新增 "+added+" 個單字");
+      }else{
+        // 覆蓋
+        LIB=data.words||[];
+        GRAM=data.grammar||[];
+        SRS_MAP=data.srs||{};
+        ST=data.stats||{quiz:0,today:0,date:""};
+        toast("✅ 覆蓋完成！");
+      }
+      syncLib();syncGram();syncSRS();syncST();
+      // 同步到 Firebase
+      var batch=LIB.slice();
+      batch.forEach(function(w){if(window.fbSaveWord)window.fbSaveWord(w);});
+      (GRAM||[]).forEach(function(g){if(window.fbSaveGram)window.fbSaveGram(g);});
+      renderHome();renderLib();
+      input.value="";
+    }catch(err){toast("❌ 解析失敗："+err.message);}
+  };
+  reader.readAsText(file);
 }
 
 // ══════════════════════════════
@@ -1091,11 +1158,29 @@ function openModalFromLib(word,libIdx){
   nav.appendChild(bp);nav.appendChild(lbl);nav.appendChild(bn);
   container.appendChild(nav);
 
+  // 左右點擊熱區：蓋在 nav 左右兩側
+  var hitL=document.createElement("div");
+  hitL.style.cssText="position:absolute;left:0;top:0;bottom:0;width:35%;z-index:5;cursor:pointer";
+  hitL.onclick=function(e){e.stopPropagation();modalNav(-1);};
+  var hitR=document.createElement("div");
+  hitR.style.cssText="position:absolute;right:0;top:0;bottom:0;width:35%;z-index:5;cursor:pointer";
+  hitR.onclick=function(e){e.stopPropagation();modalNav(1);};
+  nav.style.position="relative";
+  nav.appendChild(hitL);
+  nav.appendChild(hitR);
+
   var scroll=document.createElement("div");scroll.className="mbody-scroll";
   fillModal(scroll,w,LIB.indexOf(w));
   container.appendChild(scroll);
   scroll.scrollTop=0;
   document.getElementById("modal").style.display="flex";
+  // 滑動手勢
+  var _tx=0;
+  container.addEventListener("touchstart",function(e){_tx=e.touches[0].clientX;},{passive:true});
+  container.addEventListener("touchend",function(e){
+    var dx=e.changedTouches[0].clientX-_tx;
+    if(Math.abs(dx)>60){modalNav(dx<0?1:-1);}
+  },{passive:true});
 }
 
 function modalNav(dir){
