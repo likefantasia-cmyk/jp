@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_12.html -->
+<!-- saved from url=(0082)file:///Users/kumori67/Desktop/%E4%BD%90%E5%80%89/%E8%AA%9E%E3%81%AE%E6%A3%AE.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -303,8 +303,8 @@ nav button.on{color:var(--pk)}
 </div>
 
 <!-- 模態視窗 -->
-<div class="mbg" id="modal" style="display: flex;" onclick="if(event.target===this)closeModal()">
-  <div class="modal"><div id="mbody" style="display:flex;flex-direction:column;overflow:hidden;max-height:91dvh"><div class="mnav"><button style="background: var(--s2); border: 1px solid var(--bd2); color: var(--m2); border-radius: 9px; padding: 7px 13px; font-size: 17px;">←</button><div style="font-size: 12px; color: var(--mu); flex: 1 1 0%; text-align: center; font-weight: 600;">15 / 15</div><button style="background: var(--pk2); color: rgb(26, 10, 14); border-radius: 9px; padding: 7px 13px; font-size: 17px;">→</button></div><div class="mbody-scroll"><div class="mword">ぴったり</div><div style="display: flex; align-items: center; gap: 8px;"><div class="wkana">平假名</div><span class="wtag tpu">重音 1</span></div><div class="wtags" style="margin-top: 7px;"><span class="wtag tpk">N3</span><span class="wtag tbl">副詞</span></div><div class="wzh">正好、緊密</div><div class="wja">隙間なく密着するさま。ちょうど合うさま。</div><div class="exb"><div style="display: flex; align-items: center; gap: 6px;"><div class="exjp">彼の話は現実にぴったり合っている。</div><button style="font-size: 14px; color: var(--bl); flex-shrink: 0;">🔊</button></div><div class="exzh">他的話正好符合現實。</div></div><div style="display: flex; flex-direction: column; gap: 7px;"><div class="inp-lbl">我的例句</div><div id="modal-exlist"></div><div class="srow"><input class="inp" placeholder="新增自己的例句" style="flex: 1 1 0%;"><button class="bbtn">新增</button></div></div><div class="sprow"><button class="bspk">🔊 單字</button><button class="bspk">🔊 例句</button></div><div class="tbox"><div class="tlbl">💡 記憶技巧</div><div class="ttxt">記得「ぴったり」可以想像緊密合上的拉鍊。</div></div><div class="tbox"><div class="tlbl">📚 相關單字</div><div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px;"><span style="background: var(--s2); border: 1px solid var(--bd2); border-radius: 7px; padding: 3px 9px; font-size: 13px; cursor: pointer;">密着</span><span style="background: var(--s2); border: 1px solid var(--bd2); border-radius: 7px; padding: 3px 9px; font-size: 13px; cursor: pointer;">合う</span><span style="background: var(--s2); border: 1px solid var(--bd2); border-radius: 7px; padding: 3px 9px; font-size: 13px; cursor: pointer;">きっちり</span></div></div><button class="mclose">關閉</button></div></div></div>
+<div class="mbg" id="modal" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal"><div id="mbody" style="display:flex;flex-direction:column;overflow:hidden;max-height:91dvh"></div></div>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -558,7 +558,8 @@ async function analyzePhoto(){
       reader.readAsDataURL(_photoFile);
     });
     var mime=_photoFile.type||"image/jpeg";
-    var prompt='請辨識這張圖片中的日文學習內容，找出所有單字、文法、例句。返回 JSON 陣列（每個單字一個物件）：[{"word":"日文單字","kana":"平假名","accent":"重音數字","pos":"詞性","jlpt":"N?","zh":"繁中意思","ja_def":"日語解釋","example_jp":"例句日文","example_zh":"例句繁中","memory_tip":"記憶技巧","related":[]}]。如果圖片是整個詞條頁面，請把主單字和相關單字都列出來。只輸出 JSON，不加其他說明。';
+    var prompt="請仔細辨識這張日文學習圖片。規則：1.找出所有單字含相關單字 2.若有多個義項全部列出不省略 3.每個義項的例句圖片有幾個列幾個全部保留 4.只輸出JSON不加說明。格式：[{\"word\":\"日文\",\"kana\":\"平假名\",\"accent\":\"重音數字\",\"pos\":\"詞性\",\"jlpt\":\"N?\",\"memory_tip\":\"繁中記憶技巧\",\"related\":[],\"senses\":[{\"zh\":\"繁中意思\",\"ja_def\":\"日語解釋\",\"examples\":[{\"jp\":\"例句日文\",\"zh\":\"繁中翻譯\"}]}]}]";
+
     var apiRes=await fetch("https://api.openai.com/v1/chat/completions",{
       method:"POST",
       headers:{"Content-Type":"application/json","Authorization":"Bearer "+getKey()},
@@ -1255,7 +1256,6 @@ async function startAIQuiz(){
   var b=mk("div","sbox");b.appendChild(mk("div","spin"));b.appendChild(mk("div","smsg","AI 生成例句題目中..."));el.appendChild(b);
   var pool=shuffle(LIB).slice(0,8);
   var str=pool.map(function(w){return w.word+"（"+w.zh+"）";}).join("、");
-  var p="為以下日文單字各生成一道填空例句題：\n"+str+"\n只輸出 JSON 陣列：[{\"word\":\"目標單字\",\"sentence\":\"例句（用___代替目標單字）\",\"sentence_zh\":\"中文翻譯\",\"opts\":[\"正確答案\",\"錯誤1\",\"錯誤2\",\"錯誤3\"]}]";
   try{
     var raw=await callAI([{role:"user",content:p}]);
     var qs=parseJSON(raw);
