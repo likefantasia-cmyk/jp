@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)file:///Users/kumori67/Downloads/nihongo_8.html -->
+<!-- saved from url=(0047)file:///Users/kumori67/Downloads/nihongo_9.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -254,17 +254,17 @@ nav button.on{color:var(--pk)}
     <div class="hero">
       <div class="app-name">語<em>の</em>森</div>
       <div class="app-sub">日本語単語・文法・AI例文・SRS複習</div>
-      <div class="sync-row"><span class="sdot" id="sdot" style="background: var(--rd);"></span><span class="stxt" id="stxt">同步失敗</span></div>
+      <div class="sync-row"><span class="sdot" id="sdot" style="background: var(--gn);"></span><span class="stxt" id="stxt">已同步</span></div>
     </div>
     <div class="hdiv"></div>
     <div class="stats">
-      <div class="stat"><div class="stn" id="ht">0</div><div class="stl">單字</div></div>
-      <div class="stat"><div class="stn" id="hg">0</div><div class="stl">文法</div></div>
+      <div class="stat"><div class="stn" id="ht">13</div><div class="stl">單字</div></div>
+      <div class="stat"><div class="stn" id="hg">4</div><div class="stl">文法</div></div>
       <div class="stat"><div class="stn" id="hd">0</div><div class="stl">今日新增</div></div>
       <div class="stat"><div class="stn" id="hq">0</div><div class="stl">測驗</div></div>
     </div>
     <div class="sh">最近新增</div>
-    <div class="rlist" id="rlist"><div class="empty">還沒有單字，點「新增」開始吧 🌸</div></div>
+    <div class="rlist" id="rlist"><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">知的</div><div class="riz">ちてき　知識的</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">保護</div><div class="riz">ほご　保護</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">増額</div><div class="riz">ぞうがく　增加金額</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">提言</div><div class="riz">ていげん　建議</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">基幹</div><div class="riz">きかん　基幹</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">取り逃がす</div><div class="riz">とりにがす　放跑</div></div><span class="wtag lv0">未學</span></div></div>
   </div>
 
   <!-- 新增 -->
@@ -650,7 +650,7 @@ function saveManual(){
   if(!word||!zh){toast("日文單字和中文意思為必填");return;}
   if(LIB.some(function(l){return l.word===word;})){toast("⚠️ 已有此單字");return;}
   var w={
-    word:word,kana:v("man-kana"),pos:v("man-pos"),jlpt:v("man-jlpt"),
+    word:word,kana:v("man-kana"),accent:v("man-accent"),pos:v("man-pos"),jlpt:v("man-jlpt"),
     zh:zh,ja_def:v("man-ja_def"),
     example_jp:v("man-exjp"),example_zh:v("man-exzh"),
     memory_tip:v("man-tip"),related:[],
@@ -684,10 +684,10 @@ function doWord(){
 }
 
 function wprompt(word){
-  return "分析日文單字「"+word+"」，返回 JSON：{\"word\":\""+word+"\",\"kana\":\"平假名\",\"pos\":\"詞性\",\"jlpt\":\"N5/N4/N3/N2/N1\",\"zh\":\"繁中意思2-6字\",\"ja_def\":\"日語說明\",\"example_jp\":\"JLPT例句\",\"example_zh\":\"繁中翻譯\",\"memory_tip\":\"繁中記憶技巧\",\"related\":[\"相關詞1\",\"相關詞2\",\"相關詞3\"]}";
+  return "分析日文單字「"+word+"」，返回 JSON：{\"word\":\""+word+"\",\"kana\":\"平假名\",\"accent\":\"重音數字（0平板/1頭高/2以上尾高，如2）\",\"pos\":\"詞性\",\"jlpt\":\"N5/N4/N3/N2/N1\",\"zh\":\"繁中意思2-6字\",\"ja_def\":\"日語說明\",\"example_jp\":\"JLPT例句\",\"example_zh\":\"繁中翻譯\",\"memory_tip\":\"繁中記憶技巧\",\"related\":[\"相關詞1\",\"相關詞2\",\"相關詞3\"]}";
 }
 function bprompt(words){
-  return "批次分析日文單字["+words.join("、")+"]，返回 JSON 陣列：[{\"word\":\"\",\"kana\":\"\",\"pos\":\"\",\"jlpt\":\"\",\"zh\":\"繁中\",\"ja_def\":\"\",\"example_jp\":\"\",\"example_zh\":\"\",\"memory_tip\":\"\",\"related\":[]}]";
+  return "批次分析日文單字["+words.join("、")+"]，返回 JSON 陣列：[{\"word\":\"\",\"kana\":\"\",\"accent\":\"重音數字\",\"pos\":\"\",\"jlpt\":\"\",\"zh\":\"繁中\",\"ja_def\":\"\",\"example_jp\":\"\",\"example_zh\":\"\",\"memory_tip\":\"\",\"related\":[]}]";
 }
 
 function setLoad(msg){
@@ -721,7 +721,10 @@ function buildWCard(w,idx){
   if(dup)tags.appendChild(mk("span","wtag trd","⚠️ 重複"));
   card.appendChild(tags);
   card.appendChild(mk("div","wjp",w.word));
-  if(w.kana)card.appendChild(mk("div","wkana",w.kana));
+  var kanaRow=mk("div","");kanaRow.style.cssText="display:flex;align-items:center;gap:8px";
+  if(w.kana){var kEl=mk("div","wkana",w.kana);kanaRow.appendChild(kEl);}
+  if(w.accent!==undefined&&w.accent!==""){var ac=mk("span","wtag tpu","重音 "+w.accent);kanaRow.appendChild(ac);}
+  if(kanaRow.children.length)card.appendChild(kanaRow);
   card.appendChild(mk("div","wzh",w.zh));
   if(w.ja_def)card.appendChild(mk("div","wja",w.ja_def));
   if(w.example_jp){var eb=mk("div","exb");eb.appendChild(mk("div","exjp",w.example_jp));eb.appendChild(mk("div","exzh",w.example_zh||""));card.appendChild(eb);}
@@ -758,7 +761,7 @@ function saveAllPend(){
 
 function pushLib(w){
   chkDay();
-  var obj={word:w.word||"",kana:w.kana||"",pos:w.pos||"",jlpt:w.jlpt||"",zh:w.zh||"",ja_def:w.ja_def||"",example_jp:w.example_jp||"",example_zh:w.example_zh||"",memory_tip:w.memory_tip||"",related:w.related||[],my_examples:w.my_examples||[],source:w.source||"手動",addedAt:Date.now()};
+  var obj={word:w.word||"",kana:w.kana||"",accent:w.accent!==undefined?String(w.accent):"",pos:w.pos||"",jlpt:w.jlpt||"",zh:w.zh||"",ja_def:w.ja_def||"",example_jp:w.example_jp||"",example_zh:w.example_zh||"",memory_tip:w.memory_tip||"",related:w.related||[],my_examples:w.my_examples||[],source:w.source||"手動",addedAt:Date.now()};
   LIB.push(obj);ST.today++;syncLib();syncST();
   if(window.fbSaveWord)window.fbSaveWord(obj);
   if(window.fbSaveSt)window.fbSaveSt();
@@ -796,7 +799,7 @@ function filterLib(q){
     var row=mk("div","li");
     var inf=mk("div","");inf.style.flex="1";
     inf.appendChild(mk("div","liw",w.word));
-    inf.appendChild(mk("div","lii",(w.kana?w.kana+" · ":"")+w.zh));
+    inf.appendChild(mk("div","lii",(w.kana?w.kana+(w.accent!==undefined&&w.accent!=""?"["+w.accent+"] ":" "):"")+w.zh));
     var lvspr=mk("span","lsrs "+cls[s.level],labels[s.level]);
     var act=mk("div","lact");act.onclick=function(e){e.stopPropagation();};
     var bd=mk("button","bdel","🗑");bd.onclick=(function(wd){return function(){delWord(wd);};})(w.word);
@@ -963,7 +966,10 @@ function openModalFromLib(word,libIdx){
 }
 function fillModal(mb,w,libIdx){
   mb.appendChild(mk("div","mword",w.word));
-  if(w.kana)mb.appendChild(mk("div","wkana",w.kana));
+  var kanaRow2=mk("div","");kanaRow2.style.cssText="display:flex;align-items:center;gap:8px";
+  if(w.kana){kanaRow2.appendChild(mk("div","wkana",w.kana));}
+  if(w.accent!==undefined&&w.accent!==""){kanaRow2.appendChild(mk("span","wtag tpu","重音 "+w.accent));}
+  if(kanaRow2.children.length)mb.appendChild(kanaRow2);
   var tags=mk("div","wtags");tags.style.marginTop="7px";
   if(w.jlpt)tags.appendChild(mk("span","wtag tpk",w.jlpt));
   if(w.pos)tags.appendChild(mk("span","wtag tbl",w.pos));
@@ -1196,11 +1202,28 @@ function ansQ(btn,chosen,q){
   document.querySelectorAll(".opt").forEach(function(b){
     var m=b.querySelector(".opt-main"),s=b.querySelector(".opt-sub");if(!m||!s)return;
     var opt=m.textContent.trim(),hint="";
-    if(q.type==="jp2zh"){var x=LIB.find(function(x){return x.zh===opt;});if(x)hint=x.word+(x.kana?"（"+x.kana+"）":"");}
-    else if(q.type==="zh2jp"){var x2=LIB.find(function(x){return x.word===opt;});if(x2)hint=x2.zh;}
+    var matchWord=null;
+    if(q.type==="jp2zh"){var x=LIB.find(function(x){return x.zh===opt;});if(x){hint=x.word+(x.kana?"（"+x.kana+"）":"");matchWord=x.word;}}
+    else if(q.type==="zh2jp"){var x2=LIB.find(function(x){return x.word===opt;});if(x2){hint=x2.zh;matchWord=x2.word;}}
     else if(q.type==="gram"){var g=GRAM.find(function(g){return g.pattern===opt;});if(g)hint=g.title;}
     s.textContent=hint;
     if(!b.classList.contains("ok")&&!b.classList.contains("no"))b.classList.add("revealed");
+    // 加入單字庫按鈕（只對不在庫裡的單字顯示）
+    if(q.type!=="gram"&&getKey()){
+      var lookupWord=q.type==="jp2zh"?(LIB.find(function(x){return x.zh===opt;})||{word:null}).word||opt:opt;
+      var alreadyIn=LIB.some(function(x){return x.word===lookupWord;});
+      if(!alreadyIn){
+        var addBtn=mk("button","");
+        addBtn.style.cssText="font-size:10px;color:var(--pk);border:1px solid var(--pkbr);background:var(--pkbg);border-radius:8px;padding:2px 8px;margin-top:4px;cursor:pointer;display:block";
+        addBtn.textContent="＋ 加入單字庫";
+        addBtn.onclick=(function(wd,ab){return function(e){
+          e.stopPropagation();
+          ab.textContent="⏳";ab.disabled=true;
+          lookupAndAdd(wd).then(function(){ab.textContent="✅ 已加入";});
+        };})(lookupWord,addBtn);
+        b.appendChild(addBtn);
+      }
+    }
   });
   var wObj=LIB.find(function(x){return x.word===q.word;})||GRAM.find(function(g){return g.title===q.word;})||{};
   var lv=q.type!=="gram"?getSRS({word:q.word}).level:0;
