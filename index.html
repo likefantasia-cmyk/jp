@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_16.html -->
+<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_18.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -258,13 +258,13 @@ nav button.on{color:var(--pk)}
     </div>
     <div class="hdiv"></div>
     <div class="stats">
-      <div class="stat"><div class="stn" id="ht">16</div><div class="stl">單字</div></div>
+      <div class="stat"><div class="stn" id="ht">20</div><div class="stl">單字</div></div>
       <div class="stat"><div class="stn" id="hg">4</div><div class="stl">文法</div></div>
-      <div class="stat"><div class="stn" id="hd">3</div><div class="stl">今日新增</div></div>
+      <div class="stat"><div class="stn" id="hd">7</div><div class="stl">今日新增</div></div>
       <div class="stat"><div class="stn" id="hq">0</div><div class="stl">測驗</div></div>
     </div>
     <div class="sh">最近新增</div>
-    <div class="rlist" id="rlist"><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見る</div><div class="riz">みる　觀看</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">ぴったり</div><div class="riz">平假名　正好、緊密</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">くっきり</div><div class="riz">平假名　清晰地</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">知的</div><div class="riz">ちてき　知識的</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">保護</div><div class="riz">ほご　保護</div></div><span class="wtag lv1">初學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">増額</div><div class="riz">ぞうがく　增加金額</div></div><span class="wtag lv1">初學</span></div></div>
+    <div class="rlist" id="rlist"><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見つめる</div><div class="riz">みつめる　凝視</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">目にとめる</div><div class="riz">めにとめる　注意到</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見かける</div><div class="riz">みかける　偶然看到</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見つける</div><div class="riz">みつける　找到</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見る</div><div class="riz">みる　觀看</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">ぴったり</div><div class="riz">平假名　正好、緊密</div></div><span class="wtag lv0">未學</span></div></div>
   </div>
 
   <!-- 新增 -->
@@ -899,7 +899,8 @@ function filterLib(q){
   document.getElementById("lcnt").textContent="共 "+LIB.length+" 個"+(q||libJlptFilter!=="全部"?" · 顯示 "+list.length+" 個":"");
   var el=document.getElementById("llist");el.innerHTML="";
   if(!list.length){el.appendChild(mk("div","empty",LIB.length?"找不到單字":"單字庫是空的 🌸"));return;}
-  list.slice().reverse().forEach(function(w){
+  window._lastFilteredLib=list.slice().reverse();
+  window._lastFilteredLib.forEach(function(w){
     var idx=LIB.indexOf(w);
     var s=getSRS(w);
     var labels=["未學","初學","熟悉","良好","精通","完美"];
@@ -1064,8 +1065,21 @@ function openModalFromLib(word,libIdx){
   var bp=mk("button","");bp.style.cssText="background:var(--s2);border:1px solid var(--bd2);color:var(--m2);border-radius:9px;padding:7px 13px;font-size:17px";bp.textContent="←";
   var lbl=mk("div","");lbl.style.cssText="font-size:12px;color:var(--mu);flex:1;text-align:center;font-weight:600";lbl.textContent=(libIdx+1)+" / "+LIB.length;
   var bn=mk("button","");bn.style.cssText="background:var(--pk2);color:#1a0a0e;border-radius:9px;padding:7px 13px;font-size:17px";bn.textContent="→";
-  bp.onclick=function(){var p=(libIdx-1+LIB.length)%LIB.length;openModalFromLib(LIB[p].word,p);};
-  bn.onclick=function(){var n=(libIdx+1)%LIB.length;openModalFromLib(LIB[n].word,n);};
+  // 導覽：用篩選後列表，若無則用全部（保持顯示順序）
+  var _navList=window._lastFilteredLib&&window._lastFilteredLib.length?window._lastFilteredLib:LIB.slice().reverse();
+  var _fi=_navList.findIndex(function(x){return x.word===w.word;});
+  if(_fi<0){_navList=LIB.slice().reverse();_fi=_navList.findIndex(function(x){return x.word===w.word;});}
+  lbl.textContent=(_fi+1)+" / "+_navList.length;
+  bp.onclick=function(){
+    var pi=(_fi-1+_navList.length)%_navList.length;
+    var pw=_navList[pi];
+    openModalFromLib(pw.word,LIB.indexOf(pw));
+  };
+  bn.onclick=function(){
+    var ni=(_fi+1)%_navList.length;
+    var nw=_navList[ni];
+    openModalFromLib(nw.word,LIB.indexOf(nw));
+  };
   nav.appendChild(bp);nav.appendChild(lbl);nav.appendChild(bn);mb.appendChild(nav);
   var scroll=mk("div","mbody-scroll");
   fillModal(scroll,w,libIdx);
@@ -1093,10 +1107,17 @@ function fillModal(mb,w,libIdx){
   if(w.similar_jp){
     var msimBox=mk("div","");msimBox.style.cssText="display:flex;align-items:center;gap:8px";
     msimBox.appendChild(mk("span","wtag tgn","相似日文"));
-    var msimTxt=mk("div","");msimTxt.style.cssText="font-family:'Noto Serif JP',serif;font-size:16px;color:var(--pk)";msimTxt.textContent=w.similar_jp;
+    var msimTxt=mk("div","");msimTxt.style.cssText="font-family:'Noto Serif JP',serif;font-size:16px;color:var(--pk);flex:1";msimTxt.textContent=w.similar_jp;
     var msimSpk=mk("button","");msimSpk.style.cssText="font-size:14px;color:var(--bl)";msimSpk.textContent="🔊";
     msimSpk.onclick=function(){speak(w.similar_jp);};
-    msimBox.appendChild(msimTxt);msimBox.appendChild(msimSpk);
+    var msimAdd=mk("button","bbtn","＋ 加入");
+    msimAdd.onclick=function(){
+      if(LIB.some(function(x){return x.word===w.similar_jp;})){toast("已在單字庫");return;}
+      lookupAndAdd(w.similar_jp);
+      msimAdd.textContent="⏳";msimAdd.disabled=true;
+      setTimeout(function(){msimAdd.textContent="✅";},2000);
+    };
+    msimBox.appendChild(msimTxt);msimBox.appendChild(msimSpk);msimBox.appendChild(msimAdd);
     mb.appendChild(msimBox);
   }
   // 多義詞＋例句
@@ -1293,6 +1314,7 @@ async function startAIQuiz(){
   var b=mk("div","sbox");b.appendChild(mk("div","spin"));b.appendChild(mk("div","smsg","AI 生成例句題目中..."));el.appendChild(b);
   var pool=shuffle(LIB).slice(0,8);
   var str=pool.map(function(w){return w.word+"（"+w.zh+"）";}).join("、");
+  var p="為以下日文單字各生成一道填空例句題：\n"+str+"\n只輸出 JSON 陣列：[{\"word\":\"目標單字\",\"sentence\":\"例句（用___代替目標單字）\",\"sentence_zh\":\"中文翻譯\",\"opts\":[\"正確答案\",\"錯誤1\",\"錯誤2\",\"錯誤3\"]}]";
   try{
     var raw=await callAI([{role:"user",content:p}]);
     var qs=parseJSON(raw);
@@ -1341,7 +1363,9 @@ function ansQ(btn,chosen,q){
   if(ok){btn.classList.add("ok");QST.sc++;}
   else{btn.classList.add("no");document.querySelectorAll(".opt").forEach(function(b){var m=b.querySelector(".opt-main");if(m&&m.textContent.trim()===q.correct)b.classList.add("ok");});QST.wrong.push(q.word);}
   if(q.type!=="gram")setSRS(q.word,ok);
+  // 答題時朗讀
   if(q.type==="jp2zh"||q.type==="ai_fill")speak(q.word);
+  else if(q.type==="zh2jp")speak(q.correct);
   // 揭曉
   document.querySelectorAll(".opt").forEach(function(b){
     var m=b.querySelector(".opt-main"),s=b.querySelector(".opt-sub");if(!m||!s)return;
@@ -1549,14 +1573,14 @@ var _curAudio=null;
 var EL_KEY="sk_62544d07604a03d35e12f45fed3a5805a9bc2f94711c5aed";
 var EL_VOICE="3321Alera3fXjEWjjbAX";
 
+var _audioCtx=null;
 async function speak(text){
   if(!text)return;
   try{if(_curAudio){_curAudio.pause();_curAudio=null;}}catch(e){}
   try{
-    // 快取：同一段文字不重複打 API
-    var blob=_ttsCache[text];
-    if(!blob){
-      var res=await fetch("https://api.elevenlabs.io/v1/text-to-speech/"+EL_VOICE+"/stream",{
+    var buf=_ttsCache[text];
+    if(!buf){
+      var res=await fetch("https://api.elevenlabs.io/v1/text-to-speech/"+EL_VOICE,{
         method:"POST",
         headers:{"Content-Type":"application/json","xi-api-key":EL_KEY},
         body:JSON.stringify({
@@ -1565,14 +1589,17 @@ async function speak(text){
           voice_settings:{stability:0.4,similarity_boost:0.85,style:0.3,use_speaker_boost:true}
         })
       });
-      if(!res.ok)throw new Error("EL TTS失敗 "+res.status);
-      blob=await res.blob();
-      _ttsCache[text]=blob;
+      if(!res.ok){var err=await res.text();throw new Error("EL TTS失敗 "+res.status+" "+err);}
+      buf=await res.arrayBuffer();
+      _ttsCache[text]=buf;
     }
-    var url=URL.createObjectURL(blob);
-    var audio=new Audio(url);
-    _curAudio=audio;
-    audio.play();
+    if(!_audioCtx)_audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    if(_audioCtx.state==="suspended")await _audioCtx.resume();
+    var decoded=await _audioCtx.decodeAudioData(buf.slice(0));
+    var src=_audioCtx.createBufferSource();
+    src.buffer=decoded;src.connect(_audioCtx.destination);
+    _curAudio={pause:function(){try{src.stop();}catch(e){}}};
+    src.start(0);
   }catch(e){
     console.warn("EL TTS error",e);
     // fallback 內建TTS
