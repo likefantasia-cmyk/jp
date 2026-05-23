@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_15.html -->
+<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_16.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -258,13 +258,13 @@ nav button.on{color:var(--pk)}
     </div>
     <div class="hdiv"></div>
     <div class="stats">
-      <div class="stat"><div class="stn" id="ht">15</div><div class="stl">單字</div></div>
+      <div class="stat"><div class="stn" id="ht">16</div><div class="stl">單字</div></div>
       <div class="stat"><div class="stn" id="hg">4</div><div class="stl">文法</div></div>
-      <div class="stat"><div class="stn" id="hd">2</div><div class="stl">今日新增</div></div>
+      <div class="stat"><div class="stn" id="hd">3</div><div class="stl">今日新增</div></div>
       <div class="stat"><div class="stn" id="hq">0</div><div class="stl">測驗</div></div>
     </div>
     <div class="sh">最近新增</div>
-    <div class="rlist" id="rlist"><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">ぴったり</div><div class="riz">平假名　正好、緊密</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">くっきり</div><div class="riz">平假名　清晰地</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">知的</div><div class="riz">ちてき　知識的</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">保護</div><div class="riz">ほご　保護</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">増額</div><div class="riz">ぞうがく　增加金額</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">提言</div><div class="riz">ていげん　建議</div></div><span class="wtag lv0">未學</span></div></div>
+    <div class="rlist" id="rlist"><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見る</div><div class="riz">みる　觀看</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">ぴったり</div><div class="riz">平假名　正好、緊密</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">くっきり</div><div class="riz">平假名　清晰地</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">知的</div><div class="riz">ちてき　知識的</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">保護</div><div class="riz">ほご　保護</div></div><span class="wtag lv1">初學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">増額</div><div class="riz">ぞうがく　增加金額</div></div><span class="wtag lv1">初學</span></div></div>
   </div>
 
   <!-- 新增 -->
@@ -558,7 +558,7 @@ async function analyzePhoto(){
       reader.readAsDataURL(_photoFile);
     });
     var mime=_photoFile.type||"image/jpeg";
-    var prompt="請仔細辨識這張日文學習圖片。嚴格規則：1.圖片上的主單字只有一個，所有意思都是同一個單字的不同義項，請全部放進senses陣列，絕對不可以拆成多個獨立單字 2.每個義項各自的例句全部保留，有幾個列幾個 3.related只放真正的相關單字（非本單字的其他讀法或意思） 4.只輸出JSON不加說明。格式：[{\"word\":\"主單字\",\"kana\":\"平假名\",\"accent\":\"重音數字\",\"pos\":\"詞性\",\"jlpt\":\"N?\",\"memory_tip\":\"繁中記憶技巧\",\"related\":[],\"senses\":[{\"zh\":\"繁中意思\",\"ja_def\":\"日語解釋\",\"examples\":[{\"jp\":\"例句日文\",\"zh\":\"繁中翻譯\"}]}]}]";
+    var prompt="請忠實辨識並照抄這張日文學習圖片的所有內容，不要自行發揮或AI生成任何文字。規則：1.圖片的主單字只有一個 2.解説記憶方法、相似日文、例句全部照圖片原文照抄 3.若例句區有①②等標號才代表多義，各自放入不同sense；若無標號所有例句都屬同一個sense 4.最常用的一句話若有就放入最後一個sense的examples最後一筆並標註best_sentence:true 5.只輸出JSON不加說明。格式：[{\"word\":\"主單字\",\"kana\":\"平假名\",\"accent\":\"重音數字\",\"pos\":\"詞性\",\"jlpt\":\"N?\",\"memory_tip\":\"解説記憶方法原文\",\"similar_jp\":\"相似日文原文\",\"related\":[],\"senses\":[{\"zh\":\"繁中意思\",\"ja_def\":\"日語解釋\",\"examples\":[{\"jp\":\"例句日文\",\"zh\":\"繁中翻譯\",\"best_sentence\":false}]}]}]";
 
     var apiRes=await fetch("https://api.openai.com/v1/chat/completions",{
       method:"POST",
@@ -673,7 +673,7 @@ function renderAdd(){
   var divider2=mk("div","");divider2.style.cssText="text-align:center;color:var(--mu);font-size:11px;padding:2px 0";divider2.textContent="─── 或從圖片新增 ───";
   var photoRow=mk("div","srow");
   var photoBtn=mk("button","bs","📷 拍照 / 上傳圖片");photoBtn.style.cssText="flex:1;display:flex;align-items:center;justify-content:center;gap:6px";
-  var fileInp=document.createElement("input");fileInp.type="file";fileInp.accept="image/*";fileInp.capture="environment";fileInp.style.display="none";
+  var fileInp=document.createElement("input");fileInp.type="file";fileInp.accept="image/*";fileInp.style.display="none";
   fileInp.onchange=function(){if(this.files&&this.files[0])doPhoto(this.files[0]);};
   photoBtn.onclick=function(){fileInp.click();};
   photoRow.appendChild(photoBtn);photoRow.appendChild(fileInp);
@@ -794,17 +794,35 @@ function buildWCard(w,idx){
   if(w.kana){kanaRow.appendChild(mk("div","wkana",w.kana));}
   if(w.accent!==undefined&&w.accent!==""){kanaRow.appendChild(mk("span","wtag tpu","重音 "+w.accent));}
   if(kanaRow.children.length)card.appendChild(kanaRow);
-  // 多義詞顯示
+  // 解説・記憶方法
+  if(w.memory_tip){
+    var mtBox=mk("div","");mtBox.style.cssText="background:var(--s2);border-radius:var(--r);padding:11px 13px;display:flex;flex-direction:column;gap:4px";
+    mtBox.appendChild(mk("div","inp-lbl","解説・記憶方法"));
+    mtBox.appendChild(mk("div","",w.memory_tip));
+    card.appendChild(mtBox);
+  }
+  // 相似日文
+  if(w.similar_jp){
+    var simBox=mk("div","");simBox.style.cssText="display:flex;align-items:center;gap:8px";
+    simBox.appendChild(mk("span","wtag tgn","相似日文"));
+    var simTxt=mk("div","");simTxt.style.cssText="font-family:'Noto Serif JP',serif;font-size:15px;color:var(--pk)";simTxt.textContent=w.similar_jp;
+    simBox.appendChild(simTxt);
+    card.appendChild(simBox);
+  }
+  // 使用情境・例句（含多義）
   var senses=w.senses&&w.senses.length?w.senses:(w.zh?[{zh:w.zh,ja_def:w.ja_def||"",examples:w.example_jp?[{jp:w.example_jp,zh:w.example_zh||""}]:[]}]:[]);
   senses.forEach(function(s,si){
     var snum=senses.length>1?mk("span","wtag tbl","義"+String.fromCharCode(9312+si)):null;
     var zhEl=mk("div","wzh",s.zh||"");
-    if(snum){var row=mk("div","");row.style.cssText="display:flex;align-items:center;gap:7px";row.appendChild(snum);row.appendChild(zhEl);card.appendChild(row);}
+    if(snum){var row=mk("div","");row.style.cssText="display:flex;align-items:center;gap:7px;margin-top:4px";row.appendChild(snum);row.appendChild(zhEl);card.appendChild(row);}
     else card.appendChild(zhEl);
     if(s.ja_def)card.appendChild(mk("div","wja",s.ja_def));
     (s.examples||[]).forEach(function(ex){
+      var isBest=ex.best_sentence;
       var eb=mk("div","exb");
+      if(isBest)eb.style.cssText="background:var(--s2);border-left:3px solid var(--pk2);border-radius:0 10px 10px 0;padding:11px 13px";
       var jpRow=mk("div","");jpRow.style.cssText="display:flex;align-items:center;gap:6px";
+      if(isBest){var star=mk("span","");star.style.cssText="font-size:11px;color:var(--pk2);font-weight:700;flex-shrink:0";star.textContent="★";jpRow.appendChild(star);}
       jpRow.appendChild(mk("div","exjp",ex.jp||""));
       var spkBtn=mk("button","");spkBtn.style.cssText="font-size:13px;color:var(--bl);flex-shrink:0";spkBtn.textContent="🔊";
       spkBtn.onclick=(function(t){return function(e){e.stopPropagation();speak(t);};})(ex.jp||"");
@@ -848,11 +866,10 @@ function saveAllPend(){
 function pushLib(w){
   chkDay();
   var _senses=w.senses&&w.senses.length?w.senses:[];
-  // 相容舊格式：若沒有 senses 但有 zh/example_jp，自動轉換
   if(!_senses.length&&(w.zh||w.example_jp)){
     _senses=[{zh:w.zh||"",ja_def:w.ja_def||"",examples:w.example_jp?[{jp:w.example_jp,zh:w.example_zh||""}]:[]}];
   }
-  var obj={word:w.word||"",kana:w.kana||"",accent:w.accent!==undefined?String(w.accent):"",pos:w.pos||"",jlpt:w.jlpt||"",zh:(w.zh||(_senses[0]&&_senses[0].zh)||""),ja_def:(w.ja_def||(_senses[0]&&_senses[0].ja_def)||""),example_jp:(w.example_jp||(_senses[0]&&_senses[0].examples&&_senses[0].examples[0]&&_senses[0].examples[0].jp)||""),example_zh:(w.example_zh||(_senses[0]&&_senses[0].examples&&_senses[0].examples[0]&&_senses[0].examples[0].zh)||""),senses:_senses,memory_tip:w.memory_tip||"",related:w.related||[],my_examples:w.my_examples||[],source:w.source||"手動",addedAt:Date.now()};
+  var obj={word:w.word||"",kana:w.kana||"",accent:w.accent!==undefined?String(w.accent):"",pos:w.pos||"",jlpt:w.jlpt||"",zh:(w.zh||(_senses[0]&&_senses[0].zh)||""),ja_def:(w.ja_def||(_senses[0]&&_senses[0].ja_def)||""),example_jp:(w.example_jp||(_senses[0]&&_senses[0].examples&&_senses[0].examples[0]&&_senses[0].examples[0].jp)||""),example_zh:(w.example_zh||(_senses[0]&&_senses[0].examples&&_senses[0].examples[0]&&_senses[0].examples[0].zh)||""),senses:_senses,memory_tip:w.memory_tip||"",similar_jp:w.similar_jp||"",related:w.related||[],my_examples:w.my_examples||[],source:w.source||"手動",addedAt:Date.now()};
   LIB.push(obj);ST.today++;syncLib();syncST();
   if(window.fbSaveWord)window.fbSaveWord(obj);
   if(window.fbSaveSt)window.fbSaveSt();
@@ -1065,17 +1082,37 @@ function fillModal(mb,w,libIdx){
   if(w.jlpt)tags.appendChild(mk("span","wtag tpk",w.jlpt));
   if(w.pos)tags.appendChild(mk("span","wtag tbl",w.pos));
   mb.appendChild(tags);
-  // 多義詞
+  // 解説・記憶方法
+  if(w.memory_tip){
+    var mmtBox=mk("div","tbox");
+    mmtBox.appendChild(mk("div","tlbl","📖 解説・記憶方法"));
+    mmtBox.appendChild(mk("div","ttxt",w.memory_tip));
+    mb.appendChild(mmtBox);
+  }
+  // 相似日文
+  if(w.similar_jp){
+    var msimBox=mk("div","");msimBox.style.cssText="display:flex;align-items:center;gap:8px";
+    msimBox.appendChild(mk("span","wtag tgn","相似日文"));
+    var msimTxt=mk("div","");msimTxt.style.cssText="font-family:'Noto Serif JP',serif;font-size:16px;color:var(--pk)";msimTxt.textContent=w.similar_jp;
+    var msimSpk=mk("button","");msimSpk.style.cssText="font-size:14px;color:var(--bl)";msimSpk.textContent="🔊";
+    msimSpk.onclick=function(){speak(w.similar_jp);};
+    msimBox.appendChild(msimTxt);msimBox.appendChild(msimSpk);
+    mb.appendChild(msimBox);
+  }
+  // 多義詞＋例句
   var msenses=w.senses&&w.senses.length?w.senses:(w.zh?[{zh:w.zh,ja_def:w.ja_def||"",examples:w.example_jp?[{jp:w.example_jp,zh:w.example_zh||""}]:[]}]:[]);
   msenses.forEach(function(s,si){
     var snum=msenses.length>1?mk("span","wtag tbl","義"+String.fromCharCode(9312+si)):null;
     var zhEl=mk("div","wzh",s.zh||"");
-    if(snum){var row=mk("div","");row.style.cssText="display:flex;align-items:center;gap:7px;margin-top:6px";row.appendChild(snum);row.appendChild(zhEl);mb.appendChild(row);}
+    if(snum){var row=mk("div","");row.style.cssText="display:flex;align-items:center;gap:7px;margin-top:8px";row.appendChild(snum);row.appendChild(zhEl);mb.appendChild(row);}
     else mb.appendChild(zhEl);
     if(s.ja_def)mb.appendChild(mk("div","wja",s.ja_def));
     (s.examples||[]).forEach(function(ex){
+      var isBest=ex.best_sentence;
       var eb=mk("div","exb");
+      if(isBest)eb.style.cssText="background:var(--s2);border-left:3px solid var(--pk2);border-radius:0 10px 10px 0;padding:11px 13px";
       var jpRow=mk("div","");jpRow.style.cssText="display:flex;align-items:center;gap:6px";
+      if(isBest){var star=mk("span","");star.style.cssText="font-size:11px;color:var(--pk2);font-weight:700;flex-shrink:0";star.textContent="★ 最常用";jpRow.appendChild(star);}
       jpRow.appendChild(mk("div","exjp",ex.jp||""));
       var spkBtn=mk("button","");spkBtn.style.cssText="font-size:14px;color:var(--bl);flex-shrink:0";spkBtn.textContent="🔊";
       spkBtn.onclick=(function(t){return function(e){e.stopPropagation();speak(t);};})(ex.jp||"");
