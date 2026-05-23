@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)file:///Users/kumori67/Downloads/nihongo_9.html -->
+<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_10.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -258,13 +258,13 @@ nav button.on{color:var(--pk)}
     </div>
     <div class="hdiv"></div>
     <div class="stats">
-      <div class="stat"><div class="stn" id="ht">13</div><div class="stl">單字</div></div>
+      <div class="stat"><div class="stn" id="ht">15</div><div class="stl">單字</div></div>
       <div class="stat"><div class="stn" id="hg">4</div><div class="stl">文法</div></div>
-      <div class="stat"><div class="stn" id="hd">0</div><div class="stl">今日新增</div></div>
+      <div class="stat"><div class="stn" id="hd">2</div><div class="stl">今日新增</div></div>
       <div class="stat"><div class="stn" id="hq">0</div><div class="stl">測驗</div></div>
     </div>
     <div class="sh">最近新增</div>
-    <div class="rlist" id="rlist"><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">知的</div><div class="riz">ちてき　知識的</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">保護</div><div class="riz">ほご　保護</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">増額</div><div class="riz">ぞうがく　增加金額</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">提言</div><div class="riz">ていげん　建議</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">基幹</div><div class="riz">きかん　基幹</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">取り逃がす</div><div class="riz">とりにがす　放跑</div></div><span class="wtag lv0">未學</span></div></div>
+    <div class="rlist" id="rlist"><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">ぴったり</div><div class="riz">平假名　正好、緊密</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">くっきり</div><div class="riz">平假名　清晰地</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">知的</div><div class="riz">ちてき　知識的</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">保護</div><div class="riz">ほご　保護</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">増額</div><div class="riz">ぞうがく　增加金額</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">提言</div><div class="riz">ていげん　建議</div></div><span class="wtag lv0">未學</span></div></div>
   </div>
 
   <!-- 新增 -->
@@ -529,6 +529,61 @@ function showView(v){
 }
 
 
+
+// ══════════════════════════════
+// 圖片辨識新增單字
+// ══════════════════════════════
+var _photoFile=null;
+function doPhoto(file){
+  _photoFile=file;
+  var prev=document.getElementById("photo-prev");
+  var img=document.getElementById("photo-img");
+  if(!prev||!img)return;
+  img.src=URL.createObjectURL(file);
+  prev.style.display="flex";
+}
+
+async function analyzePhoto(){
+  if(!_photoFile){toast("請先選擇圖片");return;}
+  if(!getKey()){toast("請先設定 API Key");return;}
+  var btn=document.getElementById("aphoto-btn");
+  btn.disabled=true;btn.textContent="⏳ 辨識中...";
+  var ra=document.getElementById("ra");ra.innerHTML="";
+  var b=mk("div","sbox");b.appendChild(mk("div","spin"));b.appendChild(mk("div","smsg","AI 辨識圖片中..."));ra.appendChild(b);
+  try{
+    var base64=await new Promise(function(res,rej){
+      var reader=new FileReader();
+      reader.onload=function(){res(reader.result.split(",")[1]);};
+      reader.onerror=rej;
+      reader.readAsDataURL(_photoFile);
+    });
+    var mime=_photoFile.type||"image/jpeg";
+    var prompt='請辨識這張圖片中的日文學習內容，找出所有單字、文法、例句。返回 JSON 陣列（每個單字一個物件）：[{"word":"日文單字","kana":"平假名","accent":"重音數字","pos":"詞性","jlpt":"N?","zh":"繁中意思","ja_def":"日語解釋","example_jp":"例句日文","example_zh":"例句繁中","memory_tip":"記憶技巧","related":[]}]。如果圖片是整個詞條頁面，請把主單字和相關單字都列出來。只輸出 JSON，不加其他說明。';
+    var apiRes=await fetch("https://api.openai.com/v1/chat/completions",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+getKey()},
+      body:JSON.stringify({
+        model:"gpt-4o",max_tokens:2000,
+        messages:[{role:"user",content:[
+          {type:"image_url",image_url:{url:"data:"+mime+";base64,"+base64,detail:"high"}},
+          {type:"text",text:prompt}
+        ]}]
+      })
+    });
+    var data=await apiRes.json();
+    if(!apiRes.ok)throw new Error(data.error&&data.error.message||"API錯誤");
+    var words=parseJSON(data.choices[0].message.content);
+    if(!Array.isArray(words))words=[words];
+    ra.innerHTML="";
+    showRes(words,"圖片辨識");
+    btn.disabled=false;btn.textContent="🤖 辨識並加入單字庫";
+    var prev=document.getElementById("photo-prev");if(prev)prev.style.display="none";
+  }catch(e){
+    ra.innerHTML="";ra.appendChild(errBox("辨識失敗："+e.message));
+    btn.disabled=false;btn.textContent="🤖 辨識並加入單字庫";
+  }
+}
+
 // 查詢相關單字並直接加入單字庫
 async function lookupAndAdd(word){
   if(!getKey()){toast("請先設定 API Key");return;}
@@ -613,7 +668,20 @@ function renderAdd(){
   var wi=mk("input","inp");wi.id="wi";wi.placeholder="輸入日文單字，多個用空格或逗號隔開";
   wi.oninput=function(){document.getElementById("biw").disabled=!this.value.trim();};
   var biw=mk("button","bp","🤖 AI 分析單字");biw.id="biw";biw.disabled=true;biw.onclick=doWord;
-  aiP.appendChild(wi);aiP.appendChild(biw);
+  // 拍照 / 上傳圖片
+  var divider2=mk("div","");divider2.style.cssText="text-align:center;color:var(--mu);font-size:11px;padding:2px 0";divider2.textContent="─── 或從圖片新增 ───";
+  var photoRow=mk("div","srow");
+  var photoBtn=mk("button","bs","📷 拍照 / 上傳圖片");photoBtn.style.cssText="flex:1;display:flex;align-items:center;justify-content:center;gap:6px";
+  var fileInp=document.createElement("input");fileInp.type="file";fileInp.accept="image/*";fileInp.capture="environment";fileInp.style.display="none";
+  fileInp.onchange=function(){if(this.files&&this.files[0])doPhoto(this.files[0]);};
+  photoBtn.onclick=function(){fileInp.click();};
+  photoRow.appendChild(photoBtn);photoRow.appendChild(fileInp);
+  // 圖片預覽
+  var prevWrap=mk("div","");prevWrap.id="photo-prev";prevWrap.style.cssText="display:none;flex-direction:column;gap:8px";
+  var prevImg=mk("img","");prevImg.id="photo-img";prevImg.style.cssText="width:100%;border-radius:12px;border:1px solid var(--bd2);max-height:220px;object-fit:cover";
+  var analyzePhotoBtn=mk("button","bp","🤖 辨識並加入單字庫");analyzePhotoBtn.id="aphoto-btn";analyzePhotoBtn.onclick=analyzePhoto;
+  prevWrap.appendChild(prevImg);prevWrap.appendChild(analyzePhotoBtn);
+  aiP.appendChild(wi);aiP.appendChild(biw);aiP.appendChild(divider2);aiP.appendChild(photoRow);aiP.appendChild(prevWrap);
   w.appendChild(aiP);
 
   // 手動面板
@@ -1400,10 +1468,33 @@ function toast(msg,dur){
   var t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");
   if(_tt)clearTimeout(_tt);_tt=setTimeout(function(){t.classList.remove("show");},dur||2500);
 }
-function speak(text){
-  if(!window.speechSynthesis)return;
-  var u=new SpeechSynthesisUtterance(text);u.lang="ja-JP";u.rate=0.9;
-  speechSynthesis.cancel();speechSynthesis.speak(u);
+var _audioCtx=null;
+async function speak(text){
+  var key=getKey();
+  if(!key){
+    // fallback 內建TTS
+    if(!window.speechSynthesis)return;
+    var u=new SpeechSynthesisUtterance(text);u.lang="ja-JP";u.rate=0.9;
+    speechSynthesis.cancel();speechSynthesis.speak(u);return;
+  }
+  try{
+    var res=await fetch("https://api.openai.com/v1/audio/speech",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","Authorization":"Bearer "+key},
+      body:JSON.stringify({model:"tts-1",input:text,voice:"shimmer",speed:0.95})
+    });
+    if(!res.ok)throw new Error("TTS失敗");
+    var buf=await res.arrayBuffer();
+    if(!_audioCtx)_audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    var decoded=await _audioCtx.decodeAudioData(buf);
+    var src=_audioCtx.createBufferSource();
+    src.buffer=decoded;src.connect(_audioCtx.destination);src.start(0);
+  }catch(e){
+    console.warn("TTS error",e);
+    if(!window.speechSynthesis)return;
+    var u2=new SpeechSynthesisUtterance(text);u2.lang="ja-JP";u2.rate=0.9;
+    speechSynthesis.cancel();speechSynthesis.speak(u2);
+  }
 }
 
 // ══════════════════════════════
