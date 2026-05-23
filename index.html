@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_19.html -->
+<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_20.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -1059,31 +1059,39 @@ function openModal(word){
   if(idx>=0)openModalFromLib(word,idx);
 }
 function openModalFromLib(word,libIdx){
-  var mb=document.getElementById("mbody");mb.innerHTML="";
-  var w=LIB.find(function(x){return x.word===word;});if(!w)return;
+  var container=document.getElementById("mbody");
+  container.innerHTML="";
+  var w=LIB.find(function(x){return x.word===word;});
+  if(!w)return;
+  // 導覽列表
+  var navList=window._lastFilteredLib&&window._lastFilteredLib.length?window._lastFilteredLib:LIB.slice().reverse();
+  var fi=navList.findIndex(function(x){return x.word===word;});
+  if(fi<0){navList=LIB.slice().reverse();fi=navList.findIndex(function(x){return x.word===word;});}
+  // 建立 nav
   var nav=mk("div","mnav");
-  var bp=mk("button","");bp.style.cssText="background:var(--s2);border:1px solid var(--bd2);color:var(--m2);border-radius:9px;padding:7px 13px;font-size:17px";bp.textContent="←";
-  var lbl=mk("div","");lbl.style.cssText="font-size:12px;color:var(--mu);flex:1;text-align:center;font-weight:600";lbl.textContent=(libIdx+1)+" / "+LIB.length;
-  var bn=mk("button","");bn.style.cssText="background:var(--pk2);color:#1a0a0e;border-radius:9px;padding:7px 13px;font-size:17px";bn.textContent="→";
-  // 導覽：用篩選後列表，若無則用全部（保持顯示順序）
-  var _navList=window._lastFilteredLib&&window._lastFilteredLib.length?window._lastFilteredLib:LIB.slice().reverse();
-  var _fi=_navList.findIndex(function(x){return x.word===w.word;});
-  if(_fi<0){_navList=LIB.slice().reverse();_fi=_navList.findIndex(function(x){return x.word===w.word;});}
-  lbl.textContent=(_fi+1)+" / "+_navList.length;
+  var bp=mk("button","");
+  bp.style.cssText="background:var(--s2);border:1px solid var(--bd2);color:var(--m2);border-radius:9px;padding:7px 16px;font-size:18px;font-weight:700";
+  bp.textContent="←";
   bp.onclick=function(){
-    var pi=(_fi-1+_navList.length)%_navList.length;
-    var pw=_navList[pi];
-    openModalFromLib(pw.word,LIB.indexOf(pw));
+    var pi=(fi-1+navList.length)%navList.length;
+    openModalFromLib(navList[pi].word,LIB.indexOf(navList[pi]));
   };
+  var lbl=mk("div","");
+  lbl.style.cssText="font-size:12px;color:var(--mu);flex:1;text-align:center;font-weight:600";
+  lbl.textContent=(fi+1)+" / "+navList.length;
+  var bn=mk("button","");
+  bn.style.cssText="background:var(--pk2);color:#1a0a0e;border-radius:9px;padding:7px 16px;font-size:18px;font-weight:700";
+  bn.textContent="→";
   bn.onclick=function(){
-    var ni=(_fi+1)%_navList.length;
-    var nw=_navList[ni];
-    openModalFromLib(nw.word,LIB.indexOf(nw));
+    var ni=(fi+1)%navList.length;
+    openModalFromLib(navList[ni].word,LIB.indexOf(navList[ni]));
   };
-  nav.appendChild(bp);nav.appendChild(lbl);nav.appendChild(bn);mb.appendChild(nav);
+  nav.appendChild(bp);nav.appendChild(lbl);nav.appendChild(bn);
+  container.appendChild(nav);
   var scroll=mk("div","mbody-scroll");
   fillModal(scroll,w,libIdx);
-  mb.appendChild(scroll);scroll.scrollTop=0;
+  container.appendChild(scroll);
+  scroll.scrollTop=0;
   document.getElementById("modal").style.display="flex";
 }
 function fillModal(mb,w,libIdx){
@@ -1574,12 +1582,27 @@ var EL_KEY="sk_62544d07604a03d35e12f45fed3a5805a9bc2f94711c5aed";
 var EL_VOICE="3321Alera3fXjEWjjbAX";
 
 var _audioCtx=null;
+var _ttsCache={};
+var _curSrc=null;
+
+// iOS 需要在用戶事件中初始化 AudioContext
+function initAudioCtx(){
+  if(!_audioCtx){
+    _audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  }
+  if(_audioCtx.state==="suspended")_audioCtx.resume();
+}
+
+// 預熱：頁面載入後第一次用戶點擊就初始化
+document.addEventListener("click",function(){initAudioCtx();},{once:true});
+
 async function speak(text){
   if(!text)return;
-  try{if(_curAudio){_curAudio.pause();_curAudio=null;}}catch(e){}
+  try{if(_curSrc){_curSrc.stop();_curSrc=null;}}catch(e){}
+  initAudioCtx();
   try{
-    var buf=_ttsCache[text];
-    if(!buf){
+    var decoded=_ttsCache[text];
+    if(!decoded){
       var res=await fetch("https://api.elevenlabs.io/v1/text-to-speech/"+EL_VOICE,{
         method:"POST",
         headers:{"Content-Type":"application/json","xi-api-key":EL_KEY},
@@ -1589,23 +1612,23 @@ async function speak(text){
           voice_settings:{stability:0.4,similarity_boost:0.85,style:0.3,use_speaker_boost:true}
         })
       });
-      if(!res.ok){var err=await res.text();throw new Error("EL TTS失敗 "+res.status+" "+err);}
-      buf=await res.arrayBuffer();
-      _ttsCache[text]=buf;
+      if(!res.ok){var errTxt=await res.text();throw new Error("EL "+res.status+": "+errTxt);}
+      var buf=await res.arrayBuffer();
+      decoded=await _audioCtx.decodeAudioData(buf);
+      _ttsCache[text]=decoded;
     }
-    if(!_audioCtx)_audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    if(_audioCtx.state==="suspended")await _audioCtx.resume();
-    var decoded=await _audioCtx.decodeAudioData(buf.slice(0));
     var src=_audioCtx.createBufferSource();
-    src.buffer=decoded;src.connect(_audioCtx.destination);
-    _curAudio={pause:function(){try{src.stop();}catch(e){}}};
+    src.buffer=decoded;
+    src.connect(_audioCtx.destination);
+    _curSrc=src;
     src.start(0);
   }catch(e){
-    console.warn("EL TTS error",e);
-    // fallback 內建TTS
-    if(!window.speechSynthesis)return;
-    var u=new SpeechSynthesisUtterance(text);u.lang="ja-JP";u.rate=0.9;
-    speechSynthesis.cancel();speechSynthesis.speak(u);
+    console.warn("EL TTS error:",e.message);
+    try{
+      var u=new SpeechSynthesisUtterance(text);
+      u.lang="ja-JP";u.rate=0.9;
+      speechSynthesis.cancel();speechSynthesis.speak(u);
+    }catch(e2){}
   }
 }
 
