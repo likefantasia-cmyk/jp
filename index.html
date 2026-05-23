@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_26.html -->
+<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_27.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -250,7 +250,7 @@ nav button.on{color:var(--pk)}
 
 <div id="app">
   <!-- 首頁 -->
-  <div class="view" id="v-home">
+  <div class="view show" id="v-home">
     <div class="hero">
       <div class="app-name">語<em>の</em>森</div>
       <div class="app-sub">日本語単語・文法・AI例文・SRS複習</div>
@@ -263,24 +263,24 @@ nav button.on{color:var(--pk)}
       <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(this)">
     </div>
     <div class="stats">
-      <div class="stat"><div class="stn" id="ht">22</div><div class="stl">單字</div></div>
+      <div class="stat"><div class="stn" id="ht">25</div><div class="stl">單字</div></div>
       <div class="stat"><div class="stn" id="hg">4</div><div class="stl">文法</div></div>
-      <div class="stat"><div class="stn" id="hd">9</div><div class="stl">今日新增</div></div>
+      <div class="stat"><div class="stn" id="hd">12</div><div class="stl">今日新增</div></div>
       <div class="stat"><div class="stn" id="hq">0</div><div class="stl">測驗</div></div>
     </div>
     <div class="sh">最近新增</div>
-    <div class="rlist" id="rlist"><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">目にとめる。</div><div class="riz">めにとめる。　注意、留意</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">じっと見る。</div><div class="riz">ひらがな　專注地看</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見つめる</div><div class="riz">みつめる　凝視</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">目にとめる</div><div class="riz">めにとめる　注意到</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見かける</div><div class="riz">みかける　偶然看到</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見つける</div><div class="riz">みつける　找到</div></div><span class="wtag lv0">未學</span></div></div>
+    <div class="rlist" id="rlist"><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">気をむく</div><div class="riz">きをむく　對某件事產生興趣或心情轉變</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">たっぷり</div><div class="riz">平假名　充分、充足</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見逃さない</div><div class="riz">みのがさない　不放過，仔細觀察</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">目にとめる。</div><div class="riz">めにとめる。　注意、留意</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">じっと見る。</div><div class="riz">ひらがな　專注地看</div></div><span class="wtag lv0">未學</span></div><div class="ri"><div style="flex: 1 1 0%;"><div class="riw">見つめる</div><div class="riz">みつめる　凝視</div></div><span class="wtag lv0">未學</span></div></div>
   </div>
 
   <!-- 新增 -->
   <div class="view" id="v-add"><div class="awrap" id="awrap"></div></div>
 
   <!-- 單字庫 -->
-  <div class="view show" id="v-lib">
+  <div class="view" id="v-lib">
     <div class="ltb"><input class="srch" id="lsrch" placeholder="搜尋單字..." oninput="filterLib(this.value)"></div>
-    <div class="filter-row" id="jlpt-filter"><button class="fchip on">全部</button><button class="fchip">N5</button><button class="fchip">N4</button><button class="fchip">N3</button><button class="fchip">N2</button><button class="fchip">N1</button></div>
-    <div class="lcnt" id="lcnt">共 22 個</div>
-    <div class="llist" id="llist"><div class="li"><div style="flex: 1 1 0%;"><div class="liw">目にとめる。</div><div class="lii">めにとめる。[0] 注意、留意</div></div><span class="lsrs lv0">未學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">じっと見る。</div><div class="lii">ひらがな[0] 專注地看</div></div><span class="lsrs lv0">未學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">見つめる</div><div class="lii">みつめる[0 [3]] 凝視</div></div><span class="lsrs lv0">未學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">目にとめる</div><div class="lii">めにとめる[4] 注意到</div></div><span class="lsrs lv0">未學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">見かける</div><div class="lii">みかける[0] 偶然看到</div></div><span class="lsrs lv0">未學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">見つける</div><div class="lii">みつける[[0]] 找到</div></div><span class="lsrs lv0">未學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">見る</div><div class="lii">みる[2] 觀看</div></div><span class="lsrs lv0">未學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">ぴったり</div><div class="lii">平假名[1] 正好、緊密</div></div><span class="lsrs lv0">未學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">くっきり</div><div class="lii">平假名[1] 清晰地</div></div><span class="lsrs lv0">未學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">知的</div><div class="lii">ちてき 知識的</div></div><span class="lsrs lv0">未學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">保護</div><div class="lii">ほご 保護</div></div><span class="lsrs lv1">初學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">増額</div><div class="lii">ぞうがく 增加金額</div></div><span class="lsrs lv1">初學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">提言</div><div class="lii">ていげん 建議</div></div><span class="lsrs lv1">初學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">基幹</div><div class="lii">きかん 基幹</div></div><span class="lsrs lv0">未學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">取り逃がす</div><div class="lii">とりにがす 放跑</div></div><span class="lsrs lv1">初學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">蹴りをつく</div><div class="lii">けりをつく 結束打鬥</div></div><span class="lsrs lv1">初學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">耳を貸す</div><div class="lii">みみをかす 傾聽</div></div><span class="lsrs lv1">初學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">しつこい</div><div class="lii">しつこい 糾纏不休</div></div><span class="lsrs lv1">初學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">神託</div><div class="lii">しんたく 神的啟示</div></div><span class="lsrs lv0">未學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">沸き始める</div><div class="lii">わきはじめる 開始沸騰</div></div><span class="lsrs lv1">初學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">はっきりしない</div><div class="lii">ひらがな 不清楚的</div></div><span class="lsrs lv1">初學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div><div class="li"><div style="flex: 1 1 0%;"><div class="liw">ぼんやり</div><div class="lii">平假名 模糊不清</div></div><span class="lsrs lv1">初學</span><div class="lact"><button class="bdel">🗑</button><button class="bspks">🔊</button></div></div></div>
+    <div class="filter-row" id="jlpt-filter"></div>
+    <div class="lcnt" id="lcnt"></div>
+    <div class="llist" id="llist"></div>
   </div>
 
   <!-- 文法庫 -->
@@ -298,9 +298,9 @@ nav button.on{color:var(--pk)}
   <div class="view" id="v-article"><div class="awrap" id="artwrap"></div></div>
 
   <nav>
-    <button onclick="showView(&#39;home&#39;)" id="nb-home" class=""><span class="ni">🏠</span>首頁</button>
+    <button onclick="showView(&#39;home&#39;)" id="nb-home" class="on"><span class="ni">🏠</span>首頁</button>
     <button onclick="showView(&#39;add&#39;)" id="nb-add" class=""><span class="ni">＋</span>新增</button>
-    <button onclick="showView(&#39;lib&#39;)" id="nb-lib" class="on"><span class="ni">📖</span>單字庫</button>
+    <button onclick="showView(&#39;lib&#39;)" id="nb-lib" class=""><span class="ni">📖</span>單字庫</button>
     <button onclick="showView(&#39;gram&#39;)" id="nb-gram" class=""><span class="ni">📝</span>文法庫</button>
     <button onclick="showView(&#39;quiz&#39;)" id="nb-quiz" class=""><span class="ni">✏️</span>測驗</button>
     <button onclick="showView(&#39;article&#39;)" id="nb-article" class=""><span class="ni">📰</span>文章</button>
@@ -308,8 +308,8 @@ nav button.on{color:var(--pk)}
 </div>
 
 <!-- 模態視窗 -->
-<div class="mbg" id="modal" style="display: flex;" onclick="if(event.target===this)closeModal()">
-  <div class="modal"><div id="mbody" style="display:flex;flex-direction:column;max-height:91dvh"><div class="mnav"><button onclick="modalNav(-1)" style="background: var(--s2); border: 1px solid var(--bd2); color: var(--m2); border-radius: 9px; padding: 8px 18px; font-size: 20px; font-weight: 700; cursor: pointer;">←</button><div style="font-size: 12px; color: var(--mu); flex: 1 1 0%; text-align: center; font-weight: 600;">2 / 22</div><button onclick="modalNav(1)" style="background: var(--pk2); color: rgb(26, 10, 14); border-radius: 9px; padding: 8px 18px; font-size: 20px; font-weight: 700; cursor: pointer;">→</button></div><div class="mbody-scroll"><div class="mword">じっと見る。</div><div style="display: flex; align-items: center; gap: 8px;"><div class="wkana">ひらがな</div><span class="wtag tpu">重音 0</span></div><div class="wtags" style="margin-top: 7px;"><span class="wtag tpk">N5</span><span class="wtag tbl">動詞</span></div><div class="tbox"><div class="tlbl">📖 解説・記憶方法</div><div class="ttxt">記得「じっと」的意思是專注或不動。</div></div><div class="wzh">專注地看</div><div class="wja">動かないで、一点をじーっと見つめること。</div><div class="exb"><div style="display: flex; align-items: center; gap: 6px;"><div class="exjp">彼は答えを待ちながらじっと見ていた。</div><button style="font-size: 14px; color: var(--bl); flex-shrink: 0;">🔊</button></div><div class="exzh">他在等待答案的時候專注地盯著。</div></div><div class="exb"><div style="display: flex; align-items: center; gap: 6px;"><div class="exjp">猫が窓の外をじっと見ている。</div><button style="font-size: 14px; color: var(--bl); flex-shrink: 0;">🔊</button></div><div class="exzh">貓在專注地看著窗外。</div></div><div style="display: flex; flex-direction: column; gap: 7px;"><div class="inp-lbl">我的例句</div><div id="modal-exlist"></div><div class="srow"><input class="inp" placeholder="新增自己的例句" style="flex: 1 1 0%;"><button class="bbtn">新增</button></div></div><div class="sprow"><button class="bspk">🔊 單字</button><button class="bspk">🔊 例句</button></div><div class="tbox"><div class="tlbl">💡 記憶技巧</div><div class="ttxt">記得「じっと」的意思是專注或不動。</div></div><div class="tbox"><div class="tlbl">📚 相關單字</div><div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px;"><span style="background: var(--s2); border: 1px solid var(--bd2); border-radius: 7px; padding: 3px 9px; font-size: 13px; cursor: pointer;">見る</span><span style="background: var(--s2); border: 1px solid var(--bd2); border-radius: 7px; padding: 3px 9px; font-size: 13px; cursor: pointer;">凝視する</span></div></div><button class="mclose">關閉</button></div></div></div>
+<div class="mbg" id="modal" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal"><div id="mbody" style="display:flex;flex-direction:column;max-height:91dvh"></div></div>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -1251,16 +1251,26 @@ function fillModal(mb,w,libIdx){
   (w.my_examples||[]).forEach(function(ex,i){exList.appendChild(buildMyEx(ex,w,i));});
   exSec.appendChild(exList);
   var addRow=mk("div","srow");
-  var addInp=mk("input","inp");addInp.placeholder="新增自己的例句";addInp.style.flex="1";
-  var addBtn=mk("button","bbtn","新增");
-  addBtn.onclick=function(){
-    var txt=addInp.value.trim();if(!txt)return;
-    if(!w.my_examples)w.my_examples=[];
-    w.my_examples.push(txt);syncLib();
-    if(window.fbSaveWord)window.fbSaveWord(w);
-    var i=w.my_examples.length-1;
-    exList.appendChild(buildMyEx(txt,w,i));
-    addInp.value="";toast("✅ 已加入例句");
+  var addInp=mk("input","inp");addInp.placeholder="輸入日文例句";addInp.style.flex="1";
+  var addBtn=mk("button","bbtn","＋ 翻譯加入");
+  addBtn.onclick=async function(){
+    var jp=addInp.value.trim();if(!jp)return;
+    addBtn.textContent="⏳";addBtn.disabled=true;
+    try{
+      var zh="";
+      if(getKey()){
+        var raw=await callAI([{role:"user",content:"翻譯這個日文例句成繁體中文，只輸出翻譯結果不加任何說明："+jp}]);
+        zh=raw.trim();
+      }
+      if(!w.my_examples)w.my_examples=[];
+      var ex={jp:jp,zh:zh};
+      w.my_examples.push(ex);syncLib();
+      if(window.fbSaveWord)window.fbSaveWord(w);
+      var i=w.my_examples.length-1;
+      exList.appendChild(buildMyEx(ex,w,i));
+      addInp.value="";toast("✅ 已加入例句");
+    }catch(e){toast("❌ "+e.message);}
+    addBtn.textContent="＋ 翻譯加入";addBtn.disabled=false;
   };
   addRow.appendChild(addInp);addRow.appendChild(addBtn);
   exSec.appendChild(addRow);mb.appendChild(exSec);
@@ -1295,14 +1305,21 @@ function fillModal(mb,w,libIdx){
 }
 function buildMyEx(ex,w,i){
   var row=mk("div","my-ex-item");
-  var txt=mk("div","my-ex-txt",ex);
+  var body=mk("div","");body.style.flex="1";
+  var jp=typeof ex==="object"?ex.jp:ex;
+  var zh=typeof ex==="object"?ex.zh:"";
+  var jpEl=mk("div","exjp",jp);jpEl.style.fontSize="13px";
+  body.appendChild(jpEl);
+  if(zh){var zhEl=mk("div","exzh",zh);body.appendChild(zhEl);}
+  var spk=mk("button","");spk.style.cssText="font-size:14px;color:var(--bl);padding:2px 4px;flex-shrink:0";spk.textContent="🔊";
+  spk.onclick=function(){speak(jp);};
   var del=mk("button","my-ex-del","✕");
   del.onclick=function(){
     w.my_examples.splice(i,1);syncLib();
     if(window.fbSaveWord)window.fbSaveWord(w);
     row.remove();toast("已刪除");
   };
-  row.appendChild(txt);row.appendChild(del);return row;
+  row.appendChild(body);row.appendChild(spk);row.appendChild(del);return row;
 }
 async function genAIEx(w,btn,mb){
   btn.disabled=true;btn.textContent="⏳ 生成中...";
@@ -1316,10 +1333,11 @@ async function genAIEx(w,btn,mb){
     var sv=mk("button","");sv.style.cssText="font-size:12px;color:var(--pk);padding:4px 0;text-decoration:underline;cursor:pointer";sv.textContent="→ 儲存為我的例句";
     sv.onclick=function(){
       if(!w.my_examples)w.my_examples=[];
-      w.my_examples.push(d.example_jp);syncLib();
+      var aiEx={jp:d.example_jp,zh:d.example_zh||""};
+      w.my_examples.push(aiEx);syncLib();
       if(window.fbSaveWord)window.fbSaveWord(w);
       var exList=document.getElementById("modal-exlist");
-      if(exList)exList.appendChild(buildMyEx(d.example_jp,w,w.my_examples.length-1));
+      if(exList)exList.appendChild(buildMyEx(aiEx,w,w.my_examples.length-1));
       sv.textContent="✅ 已儲存";sv.disabled=true;toast("✅ 已加入");
     };
     box.appendChild(sv);
