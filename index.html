@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0082)file:///Users/kumori67/Desktop/%E4%BD%90%E5%80%89/%E8%AA%9E%E3%81%AE%E6%A3%AE.html -->
+<!-- saved from url=(0048)file:///Users/kumori67/Downloads/nihongo_15.html -->
 <html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -558,7 +558,7 @@ async function analyzePhoto(){
       reader.readAsDataURL(_photoFile);
     });
     var mime=_photoFile.type||"image/jpeg";
-    var prompt="請仔細辨識這張日文學習圖片。規則：1.找出所有單字含相關單字 2.若有多個義項全部列出不省略 3.每個義項的例句圖片有幾個列幾個全部保留 4.只輸出JSON不加說明。格式：[{\"word\":\"日文\",\"kana\":\"平假名\",\"accent\":\"重音數字\",\"pos\":\"詞性\",\"jlpt\":\"N?\",\"memory_tip\":\"繁中記憶技巧\",\"related\":[],\"senses\":[{\"zh\":\"繁中意思\",\"ja_def\":\"日語解釋\",\"examples\":[{\"jp\":\"例句日文\",\"zh\":\"繁中翻譯\"}]}]}]";
+    var prompt="請仔細辨識這張日文學習圖片。嚴格規則：1.圖片上的主單字只有一個，所有意思都是同一個單字的不同義項，請全部放進senses陣列，絕對不可以拆成多個獨立單字 2.每個義項各自的例句全部保留，有幾個列幾個 3.related只放真正的相關單字（非本單字的其他讀法或意思） 4.只輸出JSON不加說明。格式：[{\"word\":\"主單字\",\"kana\":\"平假名\",\"accent\":\"重音數字\",\"pos\":\"詞性\",\"jlpt\":\"N?\",\"memory_tip\":\"繁中記憶技巧\",\"related\":[],\"senses\":[{\"zh\":\"繁中意思\",\"ja_def\":\"日語解釋\",\"examples\":[{\"jp\":\"例句日文\",\"zh\":\"繁中翻譯\"}]}]}]";
 
     var apiRes=await fetch("https://api.openai.com/v1/chat/completions",{
       method:"POST",
